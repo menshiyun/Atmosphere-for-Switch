@@ -104,17 +104,48 @@ ENDOFFILE
 curl -sL https://api.github.com/repos/zdm65477730/Lockpick_RCMDecScots/releases/latest \
   | jq '.tag_name' \
   | xargs -I {} echo Lockpick_RCM {} >> ../description.txt
+curl -sL https://api.github.com/repos/zdm65477730/Lockpick_RCMDecScots/releases/latest \
+  | grep -oP '"browser_download_url": "\Khttps://[^"]*Lockpick_RCM.bin"' \
+  | sed 's/"//g' \
+  | xargs -I {} curl -sL {} -o Lockpick_RCM.bin
+if [ $? -ne 0 ]; then
+    echo "Lockpick_RCM download\033[31m failed\033[0m."
+else
+    echo "Lockpick_RCM download\033[32m success\033[0m."
+    mkdir -p ./bootloader/payloads
+    mv Lockpick_RCM.bin ./bootloader/payloads
+fi
 
 ### Fetch latest TegraExplorer.bin form https://github.com/zdm65477730/TegraExplorer/releases
 curl -sL https://api.github.com/repos/zdm65477730/TegraExplorer/releases/latest \
   | jq '.tag_name' \
   | xargs -I {} echo TegraExplorer {} >> ../description.txt
+curl -sL https://api.github.com/repos/zdm65477730/TegraExplorer/releases/latest \
+  | grep -oP '"browser_download_url": "\Khttps://[^"]*TegraExplorer.bin"' \
+  | sed 's/"//g' \
+  | xargs -I {} curl -sL {} -o TegraExplorer.bin
+if [ $? -ne 0 ]; then
+    echo "TegraExplorer download\033[31m failed\033[0m."
+else
+    echo "TegraExplorer download\033[32m success\033[0m."
+    mv TegraExplorer.bin ./bootloader/payloads
+fi
 
 
 ### Fetch latest CommonProblemResolver.bin form https://github.com/zdm65477730/CommonProblemResolver/releases
 curl -sL https://api.github.com/repos/zdm65477730/CommonProblemResolver/releases/latest \
   | jq '.tag_name' \
   | xargs -I {} echo CommonProblemResolver {} >> ../description.txt
+curl -sL https://api.github.com/repos/zdm65477730/CommonProblemResolver/releases/latest \
+  | grep -oP '"browser_download_url": "\Khttps://[^"]*CommonProblemResolver.bin"' \
+  | sed 's/"//g' \
+  | xargs -I {} curl -sL {} -o CommonProblemResolver.bin
+if [ $? -ne 0 ]; then
+    echo "CommonProblemResolver download\033[31m failed\033[0m."
+else
+    echo "CommonProblemResolver download\033[32m success\033[0m."
+    mv CommonProblemResolver.bin ./bootloader/payloads
+fi
 
 # -------------------------------------------
 
@@ -152,6 +183,17 @@ curl -sL https://api.github.com/repos/Team-Neptune/DeepSea-Toolbox/releases/late
 curl -sL https://api.github.com/repos/zdm65477730/NX-Activity-Log/releases/latest \
   | jq '.tag_name' \
   | xargs -I {} echo NX-Activity-Log {} >> ../description.txt
+curl -sL https://api.github.com/repos/zdm65477730/NX-Activity-Log/releases/latest \
+  | grep -oP '"browser_download_url": "\Khttps://[^"]*NX-Activity-Log.nro"' \
+  | sed 's/"//g' \
+  | xargs -I {} curl -sL {} -o NX-Activity-Log.nro
+if [ $? -ne 0 ]; then
+    echo "NX-Activity-Log download\033[31m failed\033[0m."
+else
+    echo "NX-Activity-Log download\033[32m success\033[0m."
+    mkdir -p ./switch/NX-Activity-Log
+    mv NX-Activity-Log.nro ./switch/NX-Activity-Log
+fi
 
 ### Fetch lastest NXThemesInstaller from https://github.com/exelix11/SwitchThemeInjector/releases/latest
 curl -sL https://api.github.com/repos/exelix11/SwitchThemeInjector/releases/latest \
@@ -198,10 +240,21 @@ curl -sL https://api.github.com/repos/XITRIX/Moonlight-Switch/releases/latest \
   | jq '.tag_name' \
   | xargs -I {} echo Moonlight {} >> ../description.txt
 
-### Fetch NX-Shell from https://github.com/joel16/NX-Shell/releases/latest
-curl -sL https://api.github.com/repos/joel16/NX-Shell/releases/latest \
+### Fetch NX-Shell from https://github.com/zdm65477730/NX-Shell/releases/latest
+curl -sL https://api.github.com/repos/zdm65477730/NX-Shell/releases/latest \
   | jq '.tag_name' \
   | xargs -I {} echo NX-Shell {} >> ../description.txt
+curl -sL https://api.github.com/repos/zdm65477730/NX-Shell/releases/latest \
+  | grep -oP '"browser_download_url": "\Khttps://[^"]*NX-Shell.nro"' \
+  | sed 's/"//g' \
+  | xargs -I {} curl -sL {} -o NX-Shell.nro
+if [ $? -ne 0 ]; then
+    echo "NX-Shell download\033[31m failed\033[0m."
+else
+    echo "NX-Shell download\033[32m success\033[0m."
+    mkdir -p ./switch/NX-Shell
+    mv NX-Shell.nro ./switch/NX-Shell
+fi
 
 ### Fetch lastest hb-appstore from https://github.com/fortheusers/hb-appstore/releases/latest
 curl -sL https://api.github.com/repos/fortheusers/hb-appstore/releases/latest \
