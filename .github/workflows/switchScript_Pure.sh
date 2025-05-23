@@ -772,9 +772,8 @@ updater2p=1
 
 [CFW-SYSNAND]
 emummc_force_disable=1
-fss0=atmosphere/package3
+pkg3=atmosphere/package3
 kip1patch=nosigchk
-atmosphere=1
 logopath=bootloader/bootlogo.bmp
 icon=bootloader/res/sysnand.bmp
 id=cfw-sys
@@ -782,9 +781,8 @@ id=cfw-sys
 
 [CFW-EMUNAND]
 emummcforce=1
-fss0=atmosphere/package3
+pkg3=atmosphere/package3
 kip1patch=nosigchk
-atmosphere=1
 logopath=bootloader/bootlogo.bmp
 icon=bootloader/res/emunand.bmp
 id=cfw-emu
@@ -792,7 +790,7 @@ id=cfw-emu
 
 [OFW-SYSNAND]
 emummc_force_disable=1
-fss0=atmosphere/package3
+pkg3=atmosphere/package3
 stock=1
 icon=bootloader/res/switch.bmp
 id=ofw-sys
