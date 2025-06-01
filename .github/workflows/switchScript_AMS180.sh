@@ -9,18 +9,18 @@ set -e
 # -------------------------------------------
 
 ### Create a new folder for storing files
-if [ -d SwitchSD ]; then
-  rm -rf SwitchSD
+if [ -d SwitchSD-AMS180 ]; then
+  rm -rf SwitchSD-AMS180
 fi
 if [ -e description.txt ]; then
   rm -rf description.txt
 fi
-mkdir -p ./SwitchSD
-mkdir -p ./SwitchSD/atmosphere/config
-mkdir -p ./SwitchSD/atmosphere/hosts
-mkdir -p ./SwitchSD/bootloader/ini
-mkdir -p ./SwitchSD/emuiibo/overlay
-cd SwitchSD
+mkdir -p ./SwitchSD-AMS180
+mkdir -p ./SwitchSD-AMS180/atmosphere/config
+mkdir -p ./SwitchSD-AMS180/atmosphere/hosts
+mkdir -p ./SwitchSD-AMS180/bootloader/ini
+mkdir -p ./SwitchSD-AMS180/emuiibo/overlay
+cd SwitchSD-AMS180
 
 # -------------------------------------------
 
@@ -30,10 +30,10 @@ cat >> ../description.txt << ENDOFFILE
 ENDOFFILE
 
 ### Fetch latest atmosphere from https://github.com/Atmosphere-NX/Atmosphere/releases/latest
-curl --header "Authorization: Bearer $GITHUB_TOKEN" --header "X-GitHub-Api-Version: 2022-11-28" -sL https://api.github.com/repos/Atmosphere-NX/Atmosphere/releases/latest \
+curl --header "Authorization: Bearer $GITHUB_TOKEN" --header "X-GitHub-Api-Version: 2022-11-28" -sL https://api.github.com/repos/Atmosphere-NX/Atmosphere/releases/tags/1.8.0-prerelease \
   | jq '.name' \
   | xargs -I {} echo {} >> ../description.txt
-curl --header "Authorization: Bearer $GITHUB_TOKEN" --header "X-GitHub-Api-Version: 2022-11-28" -sL https://api.github.com/repos/Atmosphere-NX/Atmosphere/releases/latest \
+curl --header "Authorization: Bearer $GITHUB_TOKEN" --header "X-GitHub-Api-Version: 2022-11-28" -sL https://api.github.com/repos/Atmosphere-NX/Atmosphere/releases/tags/1.8.0-prerelease \
   | grep -oP '"browser_download_url": "\Khttps://[^"]*atmosphere[^"]*.zip' \
   | sed 's/"//g' \
   | xargs -I {} curl --header "Authorization: Bearer $GITHUB_TOKEN" --header "X-GitHub-Api-Version: 2022-11-28" -sL {} -o atmosphere.zip
@@ -45,21 +45,8 @@ else
     rm atmosphere.zip
 fi
 
-### Fetch latest atmosphere with usb3.0 from https://github.com/menshiyun/Atmosphere/releases/latest
-curl --header "Authorization: Bearer $GITHUB_TOKEN" --header "X-GitHub-Api-Version: 2022-11-28" -sL https://api.github.com/repos/menshiyun/Atmosphere/releases/latest \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*atmosphere[^"]*.zip' \
-  | sed 's/"//g' \
-  | xargs -I {} curl --header "Authorization: Bearer $GITHUB_TOKEN" --header "X-GitHub-Api-Version: 2022-11-28" -sL {} -o atmosphere.zip
-if [ $? -ne 0 ]; then
-    echo "atmosphere with usb3.0 download\033[31m failed\033[0m."
-else
-    echo "atmosphere with usb3.0 download\033[32m success\033[0m."
-    unzip -oq atmosphere.zip
-    rm atmosphere.zip
-fi
-
 ### Fetch latest fusee.bin from https://github.com/Atmosphere-NX/Atmosphere/releases/latest
-curl --header "Authorization: Bearer $GITHUB_TOKEN" --header "X-GitHub-Api-Version: 2022-11-28" -sL https://api.github.com/repos/menshiyun/Atmosphere/releases/latest \
+curl --header "Authorization: Bearer $GITHUB_TOKEN" --header "X-GitHub-Api-Version: 2022-11-28" -sL https://api.github.com/repos/Atmosphere-NX/Atmosphere/releases/tags/1.8.0-prerelease \
   | grep -oP '"browser_download_url": "\Khttps://[^"]*fusee.bin"' \
   | sed 's/"//g' \
   | xargs -I {} curl --header "Authorization: Bearer $GITHUB_TOKEN" --header "X-GitHub-Api-Version: 2022-11-28" -sL {} -o fusee.bin
