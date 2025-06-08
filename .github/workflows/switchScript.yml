@@ -9,12 +9,14 @@ on:
     paths:
       - '#README.md'
       - '#switchScript.sh'
+      - '#switchScript_AMS180.sh'
       
   schedule:
     - cron: 0 10 * * *
 
 env:
   SCRIPT_SH: ./.github/workflows/switchScript.sh
+  SCRIPT_AMS180_SH: ./.github/workflows/switchScript_AMS180.sh
   TZ: Asia/Shanghai
 
 jobs:
@@ -38,6 +40,9 @@ jobs:
       run: |
         echo "DATE=$(date "+%Y%m%d %H:%M:%S")" >> $GITHUB_ENV
         echo "tag_name=$(date +%Y%m%d)" >> $GITHUB_ENV
+        chmod +x $SCRIPT_AMS180_SH
+        ./$SCRIPT_AMS180_SH
+        zip -rq SwitchSD-AMS180.zip SwitchSD-AMS180
         chmod +x $SCRIPT_SH
         ./$SCRIPT_SH
         zip -rq SwitchSD.zip SwitchSD
@@ -57,7 +62,7 @@ jobs:
         commit: main
         token: ${{ secrets.GITHUB_TOKEN }}
         body: "${{ steps.description.outputs.content }}"
-        artifacts: "SwitchSD.zip"
+        artifacts: "SwitchSD.zip,SwitchSD-AMS180.zip"
 
     - name: Remove old Releases
       uses: dev-drprasad/delete-older-releases@v0.3.2
