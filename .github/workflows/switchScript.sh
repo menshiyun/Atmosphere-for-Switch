@@ -91,11 +91,11 @@ fi
 #ENDOFFILE
 ###
 
-### Fetch sys-patch from https://github.com/borntohonk/sys-patch/releases/latest
-curl --header "Authorization: Bearer $GITHUB_TOKEN" --header "X-GitHub-Api-Version: 2022-11-28" -sL https://api.github.com/repos/borntohonk/sys-patch/releases/latest \
+### Fetch sys-patch from https://github.com/impeeza/sys-patch/releases/latest
+curl --header "Authorization: Bearer $GITHUB_TOKEN" --header "X-GitHub-Api-Version: 2022-11-28" -sL https://api.github.com/repos/impeeza/sys-patch/releases/latest \
   | jq '.name' \
   | xargs -I {} echo {} >> ../description.txt
-curl --header "Authorization: Bearer $GITHUB_TOKEN" --header "X-GitHub-Api-Version: 2022-11-28" -sL https://api.github.com/repos/borntohonk/sys-patch/releases/latest \
+curl --header "Authorization: Bearer $GITHUB_TOKEN" --header "X-GitHub-Api-Version: 2022-11-28" -sL https://api.github.com/repos/impeeza/sys-patch/releases/latest \
   | grep -oP '"browser_download_url": "\Khttps://[^"]*sys-patch.zip"' \
   | sed 's/"//g' \
   | xargs -I {} curl --header "Authorization: Bearer $GITHUB_TOKEN" --header "X-GitHub-Api-Version: 2022-11-28" -sL {} -o sys-patch.zip
