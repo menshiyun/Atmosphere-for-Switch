@@ -46,7 +46,7 @@ else
 fi
 
 ### Fetch latest fusee.bin from https://github.com/Atmosphere-NX/Atmosphere/releases/latest
-curl --header "Authorization: Bearer $GITHUB_TOKEN" --header "X-GitHub-Api-Version: 2022-11-28" -sL https://api.github.com/repos/Atmosphere-NX/Atmosphere/releases/latest \
+curl --header "Authorization: Bearer $GITHUB_TOKEN" --header "X-GitHub-Api-Version: 2022-11-28" -sL https://api.github.com/repos/Atmosphere-NX/Atmosphere/releases/tags/1.8.0-prerelease \
   | grep -oP '"browser_download_url": "\Khttps://[^"]*fusee.bin"' \
   | sed 's/"//g' \
   | xargs -I {} curl --header "Authorization: Bearer $GITHUB_TOKEN" --header "X-GitHub-Api-Version: 2022-11-28" -sL {} -o fusee.bin
@@ -76,15 +76,15 @@ fi
 
 ### Fetch Sigpatches 
 ### from https://gbatemp.net/threads/sigpatches-for-atmosphere-hekate-fss0-fusee-package3.571543/
-curl --header "Authorization: Bearer $GITHUB_TOKEN" --header "X-GitHub-Api-Version: 2022-11-28" -sL https://raw.githubusercontent.com/gzk47/SwitchPlugins/main/sys/sigpatches.zip -o sigpatches.zip
-if [ $? -ne 0 ]; then
-    echo "sigpatches download\033[31m failed\033[0m."
-else
-    echo "sigpatches download\033[32m success\033[0m."
-    echo sigpatches >> ../description.txt
-    unzip -oq sigpatches.zip
-    rm sigpatches.zip
-fi
+#curl --header "Authorization: Bearer $GITHUB_TOKEN" --header "X-GitHub-Api-Version: 2022-11-28" -sL https://raw.githubusercontent.com/gzk47/SwitchPlugins/main/sys/sigpatches.zip -o sigpatches.zip
+#if [ $? -ne 0 ]; then
+#    echo "sigpatches download\033[31m failed\033[0m."
+#else
+#    echo "sigpatches download\033[32m success\033[0m."
+#    echo sigpatches >> ../description.txt
+#    unzip -oq sigpatches.zip
+#    rm sigpatches.zip
+#fi
 ###
 #cat >> ../description.txt << ENDOFFILE
 #sigpatches
@@ -1059,7 +1059,6 @@ updater2p=1
 [CFW-SYSNAND]
 emummc_force_disable=1
 pkg3=atmosphere/package3
-kip1patch=nosigchk
 logopath=bootloader/bootlogo.bmp
 icon=bootloader/res/sysnand.bmp
 id=cfw-sys
@@ -1068,7 +1067,6 @@ id=cfw-sys
 [CFW-EMUNAND]
 emummcforce=1
 pkg3=atmosphere/package3
-kip1patch=nosigchk
 logopath=bootloader/bootlogo.bmp
 icon=bootloader/res/emunand.bmp
 id=cfw-emu
