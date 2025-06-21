@@ -26,6 +26,7 @@ mkdir -p ./ZDM-Tesla
 #mkdir -p ./ZDM-Tesla/atmosphere/hosts
 #mkdir -p ./ZDM-Tesla/bootloader/ini
 mkdir -p ./ZDM-Tesla/emuiibo/overlay
+mkdir -p ./ZDM-Tesla/bootloader/payloads
 cd ZDM-Tesla
 
 # -------------------------------------------
