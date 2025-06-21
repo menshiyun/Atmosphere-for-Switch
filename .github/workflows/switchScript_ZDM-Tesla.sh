@@ -399,36 +399,109 @@ fi
 #    rm Tesla-Menu.zip
 #fi
 
-## Fetch lastest Tesla-Menu from https://github.com/zdm65477730/Tesla-Menu/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/Tesla-Menu/releases/latest \
-  | jq '.tag_name' \
-  | xargs -I {} echo Tesla-Menu {} >> ../description.txt
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/Tesla-Menu/releases/latest \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*Tesla-Menu[^"]*.zip"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o Tesla-Menu.zip
-if [ $? -ne 0 ]; then
-    echo "Tesla-Menu download\033[31m failed\033[0m."
-else
-    echo "Tesla-Menu download\033[32m success\033[0m."
-    unzip -oq Tesla-Menu.zip
-    rm Tesla-Menu.zip
-fi
+### Fetch lastest Tesla-Menu from https://github.com/zdm65477730/Tesla-Menu/releases/latest
+#curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/Tesla-Menu/releases/latest \
+#  | jq '.tag_name' \
+#  | xargs -I {} echo Tesla-Menu {} >> ../description.txt
+#curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/Tesla-Menu/releases/latest \
+#  | grep -oP '"browser_download_url": "\Khttps://[^"]*Tesla-Menu[^"]*.zip"' \
+#  | sed 's/"//g' \
+#  | xargs -I {} curl -sL {} -o Tesla-Menu.zip
+#if [ $? -ne 0 ]; then
+#    echo "Tesla-Menu download\033[31m failed\033[0m."
+#else
+#    echo "Tesla-Menu download\033[32m success\033[0m."
+#    unzip -oq Tesla-Menu.zip
+#    rm Tesla-Menu.zip
+#fi
 
 ### Write sort.cfg in /config/Tesla-Menu/sort.cfg
-cat > ./config/Tesla-Menu/sort.cfg << ENDOFFILE
-ovl-sysmodules
-StatusMonitor
-EdiZon
-ReverseNX-RT
-sys-clk
-emuiibo
-ldn_mitm
-QuickNTP
-SysDVR
-Fizeau
-Zing
+#cat > ./config/Tesla-Menu/sort.cfg << ENDOFFILE
+#ovl-sysmodules
+#StatusMonitor
+#EdiZon
+#ReverseNX-RT
+#sys-clk
+#emuiibo
+#ldn_mitm
+#QuickNTP
+#SysDVR
+#Fizeau
+#Zing
+#ENDOFFILE
+
+### Fetch Ultrahand-Overlay
+## Fetch latest Ultrahand-Overlay from https://github.com/zdm65477730/Ultrahand-Overlay
+curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/Ultrahand-Overlay/releases/latest \
+  | jq '.tag_name' \
+  | xargs -I {} echo Ultrahand-Overlay {} >> ../description.txt
+curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/Ultrahand-Overlay/releases/latest \
+  | grep -oP '"browser_download_url": "\Khttps://[^"]*Ultrahand[^"]*.zip"' \
+  | sed 's/"//g' \
+  | xargs -I {} curl -sL {} -o ultrahand.zip
+if [ $? -ne 0 ]; then
+    echo "Ultrahand-Overlay download\033[31m failed\033[0m."
+else
+    echo "Ultrahand-Overlay download\033[32m success\033[0m."
+    unzip -oq ultrahand.zip
+    rm ultrahand.zip
+fi
+
+### Rename /config/Ultrahand to /config/ultrahand
+mv ./config/Ultrahand ./config/ultrahand
+
+### Write config.ini in /config/ultrahand
+cat > ./config/ultrahand/config.ini << ENDOFFILE
+[ultrahand]
+default_lang=zh-cn
+key_combo=L+DDOWN
 ENDOFFILE
+if [ $? -ne 0 ]; then
+    echo "Writing config.ini in ./config/ultrahand\033[31m failed\033[0m."
+else
+    echo "Writing config.ini in ./config/ultrahand\033[32m success\033[0m."
+fi
+
+### Write overlays.ini in /config/ultrahand
+cat > ./config/ultrahand/overlays.ini << ENDOFFILE
+[ovl-sysmodules.ovl]
+priority=0
+
+[StatusMonitor.ovl]
+priority=1
+
+[EdiZon.ovl]
+priority=2
+
+[ReverseNX-RT.ovl]
+priority=3
+
+[sys-clk.ovl]
+priority=4
+
+[emuiibo.ovl]
+priority=5
+
+[ldn_mitm.ovl]
+priority=6
+
+[QuickNTP.ovl]
+priority=7
+
+[SysDVR.ovl]
+priority=8
+
+[FPSLocker.ovl]
+priority=9
+
+[sys-patch-overlay.ovl]
+priority=10
+ENDOFFILE
+if [ $? -ne 0 ]; then
+    echo "Writing overlays.ini in ./config/ultrahand\033[31m failed\033[0m."
+else
+    echo "Writing overlays.ini in ./config/ultrahand\033[32m success\033[0m."
+fi
 
 ### Fetch ovl-sysmodules
 #curl -sL https://raw.githubusercontent.com/gzk47/SwitchPlugins/main/plugins/ovl-sysmodules.zip -o ovl-sysmodules.zip
