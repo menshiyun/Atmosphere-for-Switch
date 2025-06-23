@@ -36,10 +36,10 @@ cat >> ../description.txt << ENDOFFILE
 ENDOFFILE
 
 ### Fetch latest atmosphere from https://github.com/Atmosphere-NX/Atmosphere/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/Atmosphere-NX/Atmosphere/releases/latest \
+curl -H "$API_AUTH" -sL https://api.github.com/repos/menshiyun/Atmosphere/releases/latest \
   | jq '.name' \
   | xargs -I {} echo {} >> ../description.txt
-curl -H "$API_AUTH" -sL https://api.github.com/repos/Atmosphere-NX/Atmosphere/releases/latest \
+curl -H "$API_AUTH" -sL https://api.github.com/repos/menshiyun/Atmosphere/releases/latest \
   | grep -oP '"browser_download_url": "\Khttps://[^"]*atmosphere[^"]*.zip' \
   | sed 's/"//g' \
   | xargs -I {} curl -sL {} -o atmosphere.zip
@@ -52,7 +52,7 @@ else
 fi
 
 ### Fetch latest fusee.bin from https://github.com/Atmosphere-NX/Atmosphere/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/Atmosphere-NX/Atmosphere/releases/latest \
+curl -H "$API_AUTH" -sL https://api.github.com/repos/menshiyun/Atmosphere/releases/latest \
   | grep -oP '"browser_download_url": "\Khttps://[^"]*fusee.bin"' \
   | sed 's/"//g' \
   | xargs -I {} curl -sL {} -o fusee.bin
@@ -1139,7 +1139,6 @@ updater2p=1
 [CFW-SYSNAND]
 emummc_force_disable=1
 pkg3=atmosphere/package3
-#kip1patch=nosigchk
 logopath=bootloader/bootlogo.bmp
 icon=bootloader/res/sysnand.bmp
 id=cfw-sys
@@ -1148,7 +1147,6 @@ id=cfw-sys
 [CFW-EMUNAND]
 emummcforce=1
 pkg3=atmosphere/package3
-#kip1patch=nosigchk
 logopath=bootloader/bootlogo.bmp
 icon=bootloader/res/emunand.bmp
 id=cfw-emu
