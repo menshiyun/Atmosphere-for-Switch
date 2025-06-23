@@ -132,7 +132,7 @@ cat >> ../description.txt << ENDOFFILE
  
 ------------------------------
  
-Hekate paloads 二次引导软件：
+Hekate payloads 二次引导软件：
  
 ENDOFFILE
 ###
@@ -704,10 +704,10 @@ fi
 
 ### Fetch Ultrahand-Overlay
 ## Fetch latest Ultrahand-Overlay from https://github.com/zdm65477730/Ultrahand-Overlay
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/Ultrahand-Overlay/releases/latest \
+curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/Ultrahand-Overlay/releases/tags/1.9.5 \
   | jq '.tag_name' \
   | xargs -I {} echo Ultrahand-Overlay {} >> ../description.txt
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/Ultrahand-Overlay/releases/latest \
+curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/Ultrahand-Overlay/releases/tags/1.9.5 \
   | grep -oP '"browser_download_url": "\Khttps://[^"]*Ultrahand[^"]*.zip"' \
   | sed 's/"//g' \
   | xargs -I {} curl -sL {} -o ultrahand.zip
@@ -1139,7 +1139,6 @@ updater2p=1
 [CFW-SYSNAND]
 emummc_force_disable=1
 pkg3=atmosphere/package3
-#kip1patch=nosigchk
 logopath=bootloader/bootlogo.bmp
 icon=bootloader/res/sysnand.bmp
 id=cfw-sys
@@ -1148,7 +1147,6 @@ id=cfw-sys
 [CFW-EMUNAND]
 emummcforce=1
 pkg3=atmosphere/package3
-#kip1patch=nosigchk
 logopath=bootloader/bootlogo.bmp
 icon=bootloader/res/emunand.bmp
 id=cfw-emu
@@ -1365,6 +1363,20 @@ enable_dns_mitm_debug_log = u8!0x0
 enable_htc = u8!0x0
 enable_log_manager = u8!0x0
 enable_external_bluetooth_db = u8!0x1
+
+[ns.notification]
+enable_download_task_list = u8!0x0
+enable_download_ticket = u8!0x0
+enable_network_update = u8!0x0
+enable_random_wait = u8!0x0
+enable_request_on_cold_boot = u8!0x0
+enable_send_rights_usage_status_request = u8!0x0
+enable_sync_elicense_request = u8!0x0
+enable_version_list = u8!0x0
+retry_interval_min = u32!0x7FFFFFFF
+retry_interval_max = u32!0x7FFFFFFF
+version_list_waiting_limit_bias = u32!0x7FFFFFFF
+version_list_waiting_limit_min = u32!0x7FFFFFFF
 
 [hbloader]
 applet_heap_size = u64!0x0
