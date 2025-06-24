@@ -337,14 +337,20 @@ curl -H "$API_AUTH" -sL https://api.github.com/repos/StarDustCFW/Haku33/releases
   | xargs -I {} echo Haku33 {} >> ../description.txt
 
 ### Fetch linkalho
-curl -sL https://raw.githubusercontent.com/gzk47/SwitchPlugins/main/nro/linkalho.zip -o linkalho.zip
-if [ $? -ne 0 ]; then
-    echo "linkalho download\033[31m failed\033[0m."
-else
-    echo "linkalho download\033[32m success\033[0m."
-    echo linkalho >> ../description.txt
-    rm linkalho.zip
-fi
+#curl -sL https://raw.githubusercontent.com/gzk47/SwitchPlugins/main/nro/linkalho.zip -o linkalho.zip
+#if [ $? -ne 0 ]; then
+#    echo "linkalho download\033[31m failed\033[0m."
+#else
+#    echo "linkalho download\033[32m success\033[0m."
+#    echo linkalho >> ../description.txt
+#    rm linkalho.zip
+#fi
+
+###
+cat >> ../description.txt << ENDOFFILE
+linkalho
+ENDOFFILE
+###
 
 # -------------------------------------------
 
@@ -405,6 +411,7 @@ fi
 #    rm Tesla-Menu.zip
 #fi
 
+#保留压缩包Tesla-Menu.zip
 ### Fetch lastest Tesla-Menu from https://github.com/zdm65477730/Tesla-Menu/releases/latest
 #curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/Tesla-Menu/releases/latest \
 #  | jq '.tag_name' \
