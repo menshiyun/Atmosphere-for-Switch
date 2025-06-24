@@ -49,18 +49,18 @@ curl -H "$API_AUTH" -sL https://api.github.com/repos/easyworld/hekate/releases/l
 
 ### Fetch Sigpatches 
 ### from https://gbatemp.net/threads/sigpatches-for-atmosphere-hekate-fss0-fusee-package3.571543/
-curl -sL https://raw.githubusercontent.com/gzk47/SwitchPlugins/main/sys/sigpatches.zip -o sigpatches.zip
-if [ $? -ne 0 ]; then
-    echo "sigpatches download\033[31m failed\033[0m."
-else
-    echo "sigpatches download\033[32m success\033[0m."
-    echo sigpatches >> ../description.txt
-    rm sigpatches.zip
+#curl -sL https://raw.githubusercontent.com/gzk47/SwitchPlugins/main/sys/sigpatches.zip -o sigpatches.zip
+#if [ $? -ne 0 ]; then
+#    echo "sigpatches download\033[31m failed\033[0m."
+#else
+#    echo "sigpatches download\033[32m success\033[0m."
+#    echo sigpatches >> ../description.txt
+#    rm sigpatches.zip
 fi
 ###
-#cat >> ../description.txt << ENDOFFILE
-#sigpatches
-#ENDOFFILE
+cat >> ../description.txt << ENDOFFILE
+sigpatches
+ENDOFFILE
 ###
 
 ### Fetch sys-patch from https://github.com/impeeza/sys-patch/releases/latest
@@ -315,15 +315,21 @@ curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/Switch-Firmware
   | xargs -I {} echo Firmware-Dumper {} >> ../description.txt
 
 ### Fetch lastest nxdumptool(nxdt_rw_poc) from https://github.com/DarkMatterCore/nxdumptool/releases/download/rewrite-prerelease/nxdt_rw_poc.nro
-curl -sL https://github.com/DarkMatterCore/nxdumptool/releases/download/rewrite-prerelease/nxdt_rw_poc.nro -o nxdt_rw_poc.nro
-if [ $? -ne 0 ]; then
-    echo "nxdt_rw_poc download\033[31m failed\033[0m."
-else
-    echo "nxdt_rw_poc download\033[32m success\033[0m."
-    echo nxdumptool-rewrite latest >> ../description.txt
-    
-    rm nxdt_rw_poc.nro
-fi
+#curl -sL https://github.com/DarkMatterCore/nxdumptool/releases/download/rewrite-prerelease/nxdt_rw_poc.nro -o nxdt_rw_poc.nro
+#if [ $? -ne 0 ]; then
+#    echo "nxdt_rw_poc download\033[31m failed\033[0m."
+#else
+#    echo "nxdt_rw_poc download\033[32m success\033[0m."
+#    echo nxdumptool-rewrite latest >> ../description.txt
+#    mkdir -p ./switch/nxdumptool
+#    mv nxdt_rw_poc.nro ./switch/nxdumptool
+#fi
+
+###
+cat >> ../description.txt << ENDOFFILE
+nxdumptool-rewrite latest
+ENDOFFILE
+###
 
 ### Fetch lastest Haku33 from https://github.com/StarDustCFW/Haku33/releases/latest
 curl -H "$API_AUTH" -sL https://api.github.com/repos/StarDustCFW/Haku33/releases/latest \
