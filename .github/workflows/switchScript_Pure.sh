@@ -699,12 +699,17 @@ curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/nx-ovlloader/re
   | jq '.tag_name' \
   | xargs -I {} echo nx-ovlloader {} >> ../description.txt
 
+### Fetch lastest Tesla-Menu from https://github.com/zdm65477730/Tesla-Menu/releases/latest
+#curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/Tesla-Menu/releases/latest \
+#  | jq '.tag_name' \
+#  | xargs -I {} echo Tesla-Menu {} >> ../description.txt
 
-
-## Fetch lastest Tesla-Menu from https://github.com/zdm65477730/Tesla-Menu/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/Tesla-Menu/releases/latest \
+### Fetch Ultrahand-Overlay
+## Fetch latest Ultrahand-Overlay from https://github.com/zdm65477730/Ultrahand-Overlay
+curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/Ultrahand-Overlay/releases/latest \
   | jq '.tag_name' \
-  | xargs -I {} echo Tesla-Menu {} >> ../description.txt
+  | xargs -I {} echo Ultrahand-Overlay {} >> ../description.txt
+  
 ## Fetch lastest ovl-sysmodules from https://github.com/zdm65477730/ovl-sysmodules/releases/latest
 curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/ovl-sysmodules/releases/latest \
   | jq '.tag_name' \
