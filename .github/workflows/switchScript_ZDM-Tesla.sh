@@ -352,6 +352,11 @@ linkalho
 ENDOFFILE
 ###
 
+### Fetch lastest sphaira from https://github.com/ITotalJustice/sphaira/releases/latest
+curl -H "$API_AUTH" -sL https://api.github.com/repos/ITotalJustice/sphaira/releases/latest \
+  | jq '.tag_name' \
+  | xargs -I {} echo sphaira {} >> ../description.txt
+  
 # -------------------------------------------
 
 ###
