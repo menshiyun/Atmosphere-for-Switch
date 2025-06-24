@@ -447,9 +447,6 @@ else
     rm ultrahand.zip
 fi
 
-### Rename /config/Ultrahand to /config/ultrahand
-mv ./config/Ultrahand ./config/ultrahand
-
 ### Write config.ini in /config/ultrahand
 cat > ./config/ultrahand/config.ini << ENDOFFILE
 [ultrahand]
