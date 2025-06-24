@@ -93,9 +93,9 @@ fi
 #fi
 
 ###
-#cat >> ../description.txt << ENDOFFILE
-#sigpatches
-#ENDOFFILE
+cat >> ../description.txt << ENDOFFILE
+sigpatches
+ENDOFFILE
 ###
 
 ### Fetch sys-patch from https://github.com/impeeza/sys-patch/releases/latest
