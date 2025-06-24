@@ -344,6 +344,17 @@ else
     mv JKSV.nro ./switch/JKSV
 fi
 
+### Write webdav.json in /config/JKSV/webdav.json
+mkdir -p ./config/JKSV
+cat > ./config/JKSV/webdav.json << ENDOFFILE
+{
+  "origin": "https://dav.jianguoyun.com",
+  "basepath": "dav/switch",
+  "username": "gzk_47@qq.com",
+  "password": "agc6yix8mvvjs8xz47"
+}
+ENDOFFILE
+
 ### Fetch lastest tencent-switcher-gui from https://github.com/CaiMiao/Tencent-switcher-GUI/releases/latest
 curl -H "$API_AUTH" -sL https://api.github.com/repos/CaiMiao/Tencent-switcher-GUI/releases/latest \
   | jq '.tag_name' \
@@ -611,6 +622,35 @@ else
     unzip -oq linkalho.zip
     rm linkalho.zip
 fi
+
+### Fetch lastest sphaira from https://github.com/ITotalJustice/sphaira/releases/latest
+curl -H "$API_AUTH" -sL https://api.github.com/repos/ITotalJustice/sphaira/releases/latest \
+  | jq '.tag_name' \
+  | xargs -I {} echo sphaira {} >> ../description.txt
+curl -H "$API_AUTH" -sL https://api.github.com/repos/ITotalJustice/sphaira/releases/latest \
+  | grep -oP '"browser_download_url": "\Khttps://[^"]*sphaira[^"]*.zip"' \
+  | sed 's/"//g' \
+  | xargs -I {} curl -sL {} -o sphaira.zip
+if [ $? -ne 0 ]; then
+    echo "sphaira download\033[31m failed\033[0m."
+else
+    echo "sphaira download\033[32m success\033[0m."
+    unzip -oq sphaira.zip
+    rm sphaira.zip
+fi
+
+### Write config.ini in /config/sphaira/config.ini
+mkdir -p ./config/sphaira
+cat > ./config/sphaira/config.ini << ENDOFFILE
+[paths]
+last_path=/
+[config]
+theme=romfs:/themes/white_theme.ini
+language=7
+replace_hbmenu=0
+install_emummc=1
+left_side_menu=Games
+ENDOFFILE
 
 # -------------------------------------------
 
