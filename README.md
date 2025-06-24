@@ -42,7 +42,7 @@
     - [x] 主题破解 `theme-patches` [From Here](https://github.com/exelix11/theme-patches)
   - Tesla
     - [x] 加载器 `nx-ovlloader` [From Here](https://github.com/zdm65477730/nx-ovlloader/releases/latest)
-    - [x] 初始菜单 `Tesla-Menu` [From Here](https://github.com/zdm65477730/Tesla-Menu/releases/latest)
+    - [x] 初始菜单 `Ultrahand` [From Here](https://github.com/zdm65477730/Ultrahand-Overlay/releases/latest)
   - Ovl插件
     - [x] 金手指工具 `EdiZon` [From Here](https://github.com/zdm65477730/EdiZon-Overlay/releases/latest)
     - [x] 系统模块 `ovl-sysmodules` [From Here](https://github.com/zdm65477730/ovl-sysmodules/releases/latest)
