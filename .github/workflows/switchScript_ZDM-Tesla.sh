@@ -138,7 +138,6 @@ else
     mv TegraExplorer.bin ./bootloader/payloads
 fi
 
-
 ### Fetch latest CommonProblemResolver.bin form https://github.com/zdm65477730/CommonProblemResolver/releases
 curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/CommonProblemResolver/releases/latest \
   | jq '.tag_name' \
@@ -404,17 +403,17 @@ fi
 #curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/Tesla-Menu/releases/latest \
 #  | jq '.tag_name' \
 #  | xargs -I {} echo Tesla-Menu {} >> ../description.txt
-#curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/Tesla-Menu/releases/latest \
-#  | grep -oP '"browser_download_url": "\Khttps://[^"]*Tesla-Menu[^"]*.zip"' \
-#  | sed 's/"//g' \
-#  | xargs -I {} curl -sL {} -o Tesla-Menu.zip
-#if [ $? -ne 0 ]; then
-#    echo "Tesla-Menu download\033[31m failed\033[0m."
-#else
-#    echo "Tesla-Menu download\033[32m success\033[0m."
+curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/Tesla-Menu/releases/latest \
+  | grep -oP '"browser_download_url": "\Khttps://[^"]*Tesla-Menu[^"]*.zip"' \
+  | sed 's/"//g' \
+  | xargs -I {} curl -sL {} -o Tesla-Menu.zip
+if [ $? -ne 0 ]; then
+    echo "Tesla-Menu download\033[31m failed\033[0m."
+else
+    echo "Tesla-Menu download\033[32m success\033[0m."
 #    unzip -oq Tesla-Menu.zip
 #    rm Tesla-Menu.zip
-#fi
+fi
 
 ### Write sort.cfg in /config/Tesla-Menu/sort.cfg
 #cat > ./config/Tesla-Menu/sort.cfg << ENDOFFILE
