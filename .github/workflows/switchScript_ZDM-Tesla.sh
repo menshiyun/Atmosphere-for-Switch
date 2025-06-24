@@ -56,7 +56,8 @@ curl -H "$API_AUTH" -sL https://api.github.com/repos/easyworld/hekate/releases/l
 #    echo "sigpatches download\033[32m success\033[0m."
 #    echo sigpatches >> ../description.txt
 #    rm sigpatches.zip
-fi
+#fi
+
 ###
 cat >> ../description.txt << ENDOFFILE
 sigpatches
@@ -456,29 +457,29 @@ curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/Ultrahand-Overl
 curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/Ultrahand-Overlay/releases/latest \
   | grep -oP '"browser_download_url": "\Khttps://[^"]*Ultrahand[^"]*.zip"' \
   | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o ultrahand.zip
+  | xargs -I {} curl -sL {} -o Ultrahand.zip
 if [ $? -ne 0 ]; then
     echo "Ultrahand-Overlay download\033[31m failed\033[0m."
 else
     echo "Ultrahand-Overlay download\033[32m success\033[0m."
-    unzip -oq ultrahand.zip
-    rm ultrahand.zip
+    unzip -oq Ultrahand.zip
+    rm Ultrahand.zip
 fi
 
-### Write config.ini in /config/ultrahand
-cat > ./config/ultrahand/config.ini << ENDOFFILE
+### Write config.ini in /config/Ultrahand
+cat > ./config/Ultrahand/config.ini << ENDOFFILE
 [ultrahand]
 default_lang=zh-cn
 key_combo=L+DDOWN
 ENDOFFILE
 if [ $? -ne 0 ]; then
-    echo "Writing config.ini in ./config/ultrahand\033[31m failed\033[0m."
+    echo "Writing config.ini in ./config/Ultrahand\033[31m failed\033[0m."
 else
-    echo "Writing config.ini in ./config/ultrahand\033[32m success\033[0m."
+    echo "Writing config.ini in ./config/Ultrahand\033[32m success\033[0m."
 fi
 
-### Write overlays.ini in /config/ultrahand
-cat > ./config/ultrahand/overlays.ini << ENDOFFILE
+### Write overlays.ini in /config/Ultrahand
+cat > ./config/Ultrahand/overlays.ini << ENDOFFILE
 [ovl-sysmodules.ovl]
 priority=0
 
@@ -513,9 +514,9 @@ priority=9
 priority=10
 ENDOFFILE
 if [ $? -ne 0 ]; then
-    echo "Writing overlays.ini in ./config/ultrahand\033[31m failed\033[0m."
+    echo "Writing overlays.ini in ./config/Ultrahand\033[31m failed\033[0m."
 else
-    echo "Writing overlays.ini in ./config/ultrahand\033[32m success\033[0m."
+    echo "Writing overlays.ini in ./config/Ultrahand\033[32m success\033[0m."
 fi
 
 ### Fetch ovl-sysmodules
