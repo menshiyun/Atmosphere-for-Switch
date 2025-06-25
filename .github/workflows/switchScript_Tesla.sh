@@ -649,6 +649,8 @@ language=7
 replace_hbmenu=0
 install_emummc=1
 left_side_menu=Games
+[games]
+layout=2
 ENDOFFILE
 
 # -------------------------------------------
