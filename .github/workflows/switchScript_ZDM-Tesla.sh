@@ -519,6 +519,9 @@ else
     echo "Writing overlays.ini in ./config/Ultrahand\033[32m success\033[0m."
 fi
 
+### Rename /config/Ultrahand to /config/ultrahand 主题文件夹目前只识别小写
+mv ./config/Ultrahand ./config/ultrahand
+
 ### Fetch ovl-sysmodules
 #curl -sL https://raw.githubusercontent.com/gzk47/SwitchPlugins/main/plugins/ovl-sysmodules.zip -o ovl-sysmodules.zip
 #if [ $? -ne 0 ]; then
