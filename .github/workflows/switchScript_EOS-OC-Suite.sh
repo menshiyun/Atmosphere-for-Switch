@@ -639,6 +639,49 @@ else
     mv ./switch/sys-clk-manager.nro ./switch/sys-clk/sys-clk.nro
 fi
 
+### Write toolbox.json in /atmosphere/contents/00FF0000636C6BFF
+cat > ./atmosphere/contents/00FF0000636C6BFF/toolbox.json << ENDOFFILE
+{
+    "name": "EOS-OC-Suite",
+    "tid": "00FF0000636C6BFF",
+    "requires_reboot": true
+}
+ENDOFFILE
+if [ $? -ne 0 ]; then
+    echo "Writing toolbox.json in ./atmosphere/contents/00FF0000636C6BFF/ directory\033[31m failed\033[0m."
+else
+    echo "Writing toolbox.json in ./atmosphere/contents/00FF0000636C6BFF/ directory\033[32m success\033[0m."
+fi
+
+### Write config.ini in /config/sys-clk
+cat > ./config/sys-clk/config.ini << ENDOFFILE
+[values]
+uncapped_clocks=1
+; Defines how often sys-clk log temperatures, in milliseconds (set 0 to disable)
+temp_log_interval_ms=0
+; Defines how often sys-clk writes to the CSV, in milliseconds (set 0 to disable)
+csv_write_interval_ms=0
+
+; Example #1: BOTW
+; Overclock CPU when docked
+; Overclock MEM to docked clocks when handheld
+;[01007EF00011E000]
+;docked_cpu=1224
+;handheld_mem=1600
+
+; Example #2: Picross
+; Underclock to save battery
+;[0100BA0003EEA000]
+;handheld_cpu=816
+;handheld_gpu=153
+;handheld_mem=800
+ENDOFFILE
+if [ $? -ne 0 ]; then
+    echo "Writing config.ini in ./config/sys-clk/ directory\033[31m failed\033[0m."
+else
+    echo "Writing config.ini in ./config/sys-clk/ directory\033[32m success\033[0m."
+fi
+
 ### Fetch latest EOS-OC-Suite kip.zip from https://github.com/halop/OC_Toolkit_SC_EOS/releases/latest
 #curl -H "$API_AUTH" -sL https://api.github.com/repos/halop/OC_Toolkit_SC_EOS/releases/latest \
 #  | jq '.name' \
@@ -654,7 +697,7 @@ else
     unzip -oq kip.zip
     rm kip.zip
     mkdir -p ./atmosphere/kips
-    mv loader.kip ./bootloader/kips
+    mv loader.kip ./atmosphere/kips
 fi
 
 # -------------------------------------------
