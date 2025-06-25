@@ -1154,6 +1154,23 @@ fi
 
 # -------------------------------------------
 
+###
+cat >> ../description.txt << ENDOFFILE
+ 
+------------------------------
+ 
+极限超频替换包：（ 覆盖到【特斯拉版】心悦整合包上替换 ）
+ 
+ENDOFFILE
+###
+
+### Fetch latest EOS-OC-Suite sys-clk.zip from https://github.com/halop/OC_Toolkit_SC_EOS/releases/latest
+curl -H "$API_AUTH" -sL https://api.github.com/repos/halop/OC_Toolkit_SC_EOS/releases/latest \
+  | jq '.tag_name' \
+  | xargs -I {} echo EOS{}-OC-Suite >> ../description.txt
+ 
+# -------------------------------------------
+
 ### Rename hekate_ctcaer_*.bin to payload.bin
 find . -name "*hekate_ctcaer*" -exec mv {} payload.bin \;
 if [ $? -ne 0 ]; then
@@ -1496,6 +1513,7 @@ cat >> ../description.txt << ENDOFFILE
 SwitchSD-Pure  为：纯净版
 SwitchSD-Tesla 为：特斯拉版
 SwitchSD       为：特斯拉版+sys-patch
+EOS-OC-Suite   为：极限超频替换包
  
 ENDOFFILE
 ###
