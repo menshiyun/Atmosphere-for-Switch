@@ -347,10 +347,10 @@ fi
 mkdir -p ./config/JKSV
 cat > ./config/JKSV/webdav.json << ENDOFFILE
 {
-  "origin": "https://dav.jianguoyun.com",
-  "basepath": "dav/switch",
-  "username": "gzk_47@qq.com",
-  "password": "agc6yix8mvvjs8xz47"
+  "origin": "示例：https://dav.jianguoyun.com",
+  "basepath": "示例：dav/switch",
+  "username": "示例：gzk_47@qq.com",
+  "password": "示例：agc6yix8mvvjs8xz47"
 }
 ENDOFFILE
 
@@ -810,6 +810,9 @@ if [ $? -ne 0 ]; then
 else
     echo "Writing overlays.ini in ./config/Ultrahand\033[32m success\033[0m."
 fi
+
+### Rename /config/Ultrahand to /config/ultrahand 主题文件夹目前只识别小写
+mv ./config/Ultrahand ./config/ultrahand
 
 ### Fetch ovl-sysmodules
 #curl -sL https://raw.githubusercontent.com/gzk47/SwitchPlugins/main/plugins/ovl-sysmodules.zip -o ovl-sysmodules.zip
