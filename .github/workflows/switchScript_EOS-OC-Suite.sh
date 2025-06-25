@@ -713,7 +713,7 @@ rm -rf mods
 ### Delete boot2 files
 rm -f atmosphere/contents/00FF0000A53BB665/flags/*.*
 #00FF0000A53BB665--SysDVR
-rm -f atmosphere/contents/00FF0000636C6BFF/flags/*.*
+#rm -f atmosphere/contents/00FF0000636C6BFF/flags/*.*
 #00FF0000636C6BFF--sys-clk
 rm -f atmosphere/contents/0000000000534C56/flags/*.*
 #0000000000534C56--SaltyNX
