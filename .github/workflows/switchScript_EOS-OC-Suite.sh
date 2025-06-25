@@ -567,6 +567,16 @@ curl -H "$API_AUTH" -sL https://api.github.com/repos/o0Zz/sys-con/releases/lates
 
 # -------------------------------------------
 
+###
+cat >> ../description.txt << ENDOFFILE
+ 
+------------------------------
+ 
+极限超频替换包：（ 覆盖到【特斯拉版】心悦整合包上替换 ）
+ 
+ENDOFFILE
+###
+
 ### Write hekate_ipl.ini in /bootloader/
 mkdir -p ./bootloader
 cat > ./bootloader/hekate_ipl.ini << ENDOFFILE
@@ -621,9 +631,9 @@ else
 fi
 
 ### Fetch latest EOS-OC-Suite sys-clk.zip from https://github.com/halop/OC_Toolkit_SC_EOS/releases/latest
-#curl -H "$API_AUTH" -sL https://api.github.com/repos/halop/OC_Toolkit_SC_EOS/releases/latest \
-#  | jq '.name' \
-#  | xargs -I {} echo {} >> ../description.txt
+curl -H "$API_AUTH" -sL https://api.github.com/repos/halop/OC_Toolkit_SC_EOS/releases/latest \
+  | jq '.tag_name' \
+  | xargs -I {} echo EOS{}-OC-Suite >> ../description.txt
 curl -H "$API_AUTH" -sL https://api.github.com/repos/halop/OC_Toolkit_SC_EOS/releases/latest \
   | grep -oP '"browser_download_url": "\Khttps://[^"]*sys-clk[^"]*.zip' \
   | sed 's/"//g' \
