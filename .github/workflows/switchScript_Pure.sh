@@ -348,9 +348,9 @@ mkdir -p ./config/JKSV
 cat > ./config/JKSV/webdav.json << ENDOFFILE
 {
   "origin": "https://dav.jianguoyun.com",
-  "basepath": "dav/switch",
-  "username": "gzk_47@qq.com",
-  "password": "agc6yix8mvvjs8xz47"
+  "basepath": "示例：dav/switch",
+  "username": "示例：gzk_47@qq.com",
+  "password": "示例：agc6yix8mvvjs8xz47"
 }
 ENDOFFILE
 
