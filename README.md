@@ -9,7 +9,7 @@
     - [x] `Sigpatches` [From Here](https://gbatemp.net/threads/sigpatches-for-atmosphere-hekate-fss0-fusee-package3.571543/)
     - [x] `自编译大气层内置Sigpatch` [From Here]()
   - Payload插件
-    - [x] 主机系统的密钥提取工具 `Lockpick_RCM` [From Here](https://github.com/Decscots/Lockpick_RCM/releases/latest)
+    - [x] 主机系统的密钥提取工具 `Lockpick_RCM` [From Here](https://github.com/zdm65477730/Lockpick_RCMDecScots/releases/latest)
     - [x] Hekate下的文件管理工具 `TegraExplorer` [From Here](https://github.com/zdm65477730/TegraExplorer/releases/latest)
     - [x] Hekate下删除主题和关闭插件自动启动 `CommonProblemResolver` [From Here](https://github.com/zdm65477730/CommonProblemResolver/releases/latest)
   - 相册Nro软件
@@ -60,6 +60,9 @@
     - [x] 蓝牙手柄插件 `MissionControl` [From Here](https://github.com/ndeadly/MissionControl/releases/latest)
     - [x] 有线手柄插件 `sys-con` [From Here](https://github.com/o0Zz/sys-con/releases/latest)
 
+  - 极限超频
+    - [x] 极限超频插件 `EOS-OC-Suite` [From Here](https://github.com/halop/OC_Toolkit_SC_EOS/releases/latest)
+          
 - 文件操作：
     - [x] 移动 `fusee.bin` 至 `bootloader/payloads` 文件夹
     - [x] 将 `hekate_ctcaer_*.bin` 重命名为 `payload.bin`
