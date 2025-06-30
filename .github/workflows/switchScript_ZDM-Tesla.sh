@@ -26,7 +26,6 @@ mkdir -p ./ZDM-Tesla
 #mkdir -p ./ZDM-Tesla/atmosphere/hosts
 #mkdir -p ./ZDM-Tesla/bootloader/ini
 mkdir -p ./ZDM-Tesla/emuiibo/overlay
-mkdir -p ./ZDM-Tesla/bootloader/payloads
 cd ZDM-Tesla
 
 # -------------------------------------------
@@ -55,6 +54,7 @@ curl -H "$API_AUTH" -sL https://api.github.com/repos/easyworld/hekate/releases/l
 #else
 #    echo "sigpatches download\033[32m success\033[0m."
 #    echo sigpatches >> ../description.txt
+#    unzip -oq sigpatches.zip
 #    rm sigpatches.zip
 #fi
 
@@ -88,7 +88,7 @@ cat >> ../description.txt << ENDOFFILE
  
 ------------------------------
  
-Hekate paloads 二次引导软件：
+Hekate payloads 二次引导软件：
  
 ENDOFFILE
 ###
@@ -272,7 +272,7 @@ curl -H "$API_AUTH" -sL https://api.github.com/repos/fortheusers/hb-appstore/rel
 curl -H "$API_AUTH" -sL https://api.github.com/repos/masagrator/ReverseNX-Tool/releases/latest \
   | jq '.tag_name' \
   | xargs -I {} echo ReverseNX-Tool {} >> ../description.txt
-  curl -H "$API_AUTH" -sL https://api.github.com/repos/masagrator/ReverseNX-Tool/releases/latest \
+curl -H "$API_AUTH" -sL https://api.github.com/repos/masagrator/ReverseNX-Tool/releases/latest \
   | grep -oP '"browser_download_url": "\Khttps://[^"]*ReverseNX-Tool.nro"' \
   | sed 's/"//g' \
   | xargs -I {} curl -sL {} -o ReverseNX-Tool.nro
@@ -344,6 +344,7 @@ curl -H "$API_AUTH" -sL https://api.github.com/repos/StarDustCFW/Haku33/releases
 #else
 #    echo "linkalho download\033[32m success\033[0m."
 #    echo linkalho >> ../description.txt
+#    unzip -oq linkalho.zip
 #    rm linkalho.zip
 #fi
 
@@ -357,7 +358,12 @@ ENDOFFILE
 curl -H "$API_AUTH" -sL https://api.github.com/repos/ITotalJustice/sphaira/releases/latest \
   | jq '.tag_name' \
   | xargs -I {} echo sphaira {} >> ../description.txt
-  
+
+### Fetch lastest Checkpoint from https://github.com/BernardoGiordano/Checkpoint/releases/latest
+curl -H "$API_AUTH" -sL https://api.github.com/repos/BernardoGiordano/Checkpoint/releases/latest \
+  | jq '.tag_name' \
+  | xargs -I {} echo Checkpoint {} >> ../description.txt
+
 # -------------------------------------------
 
 ###
@@ -876,7 +882,7 @@ ENDOFFILE
 curl -H "$API_AUTH" -sL https://api.github.com/repos/halop/OC_Toolkit_SC_EOS/releases/latest \
   | jq '.tag_name' \
   | xargs -I {} echo EOS{}-OC-Suite >> ../description.txt
- 
+
 # -------------------------------------------
 
 

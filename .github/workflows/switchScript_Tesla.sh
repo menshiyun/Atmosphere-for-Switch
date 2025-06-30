@@ -131,7 +131,7 @@ cat >> ../description.txt << ENDOFFILE
  
 ------------------------------
  
-Hekate paloads 二次引导软件：
+Hekate payloads 二次引导软件：
  
 ENDOFFILE
 ###
@@ -470,11 +470,11 @@ else
     mv Moonlight-Switch.nro ./switch/Moonlight-Switch
 fi
 
-### Fetch NX-Shell from https://github.com/joel16/NX-Shell/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/joel16/NX-Shell/releases/latest \
+### Fetch NX-Shell from https://github.com/zdm65477730/NX-Shell/releases/latest
+curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/NX-Shell/releases/latest \
   | jq '.tag_name' \
   | xargs -I {} echo NX-Shell {} >> ../description.txt
-curl -H "$API_AUTH" -sL https://api.github.com/repos/joel16/NX-Shell/releases/latest \
+curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/NX-Shell/releases/latest \
   | grep -oP '"browser_download_url": "\Khttps://[^"]*NX-Shell.nro"' \
   | sed 's/"//g' \
   | xargs -I {} curl -sL {} -o NX-Shell.nro
@@ -652,6 +652,22 @@ left_side_menu=Games
 [games]
 layout=2
 ENDOFFILE
+
+### Fetch lastest Checkpoint from https://github.com/BernardoGiordano/Checkpoint/releases/latest
+curl -H "$API_AUTH" -sL https://api.github.com/repos/BernardoGiordano/Checkpoint/releases/latest \
+  | jq '.tag_name' \
+  | xargs -I {} echo Checkpoint {} >> ../description.txt
+curl -H "$API_AUTH" -sL https://api.github.com/repos/BernardoGiordano/Checkpoint/releases/latest \
+  | grep -oP '"browser_download_url": "\Khttps://[^"]*Checkpoint.nro"' \
+  | sed 's/"//g' \
+  | xargs -I {} curl -sL {} -o Checkpoint.nro
+if [ $? -ne 0 ]; then
+    echo "Checkpoint download\033[31m failed\033[0m."
+else
+    echo "Checkpoint download\033[32m success\033[0m."
+    mkdir -p ./switch/Checkpoint
+    mv Checkpoint.nro ./switch/Checkpoint
+fi
 
 # -------------------------------------------
 
@@ -1170,7 +1186,7 @@ ENDOFFILE
 curl -H "$API_AUTH" -sL https://api.github.com/repos/halop/OC_Toolkit_SC_EOS/releases/latest \
   | jq '.tag_name' \
   | xargs -I {} echo EOS{}-OC-Suite >> ../description.txt
- 
+
 # -------------------------------------------
 
 ### Rename hekate_ctcaer_*.bin to payload.bin

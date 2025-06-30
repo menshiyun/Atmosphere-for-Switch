@@ -26,7 +26,6 @@ mkdir -p ./EOS-OC-Suite
 #mkdir -p ./EOS-OC-Suite/atmosphere/hosts
 #mkdir -p ./EOS-OC-Suite/bootloader/ini
 #mkdir -p ./EOS-OC-Suite/emuiibo/overlay
-#mkdir -p ./EOS-OC-Suite/bootloader/payloads
 cd EOS-OC-Suite
 
 # -------------------------------------------
@@ -55,6 +54,7 @@ curl -H "$API_AUTH" -sL https://api.github.com/repos/easyworld/hekate/releases/l
 #else
 #    echo "sigpatches download\033[32m success\033[0m."
 #    echo sigpatches >> ../description.txt
+#    unzip -oq sigpatches.zip
 #    rm sigpatches.zip
 #fi
 
@@ -88,7 +88,7 @@ cat >> ../description.txt << ENDOFFILE
  
 ------------------------------
  
-Hekate paloads 二次引导软件：
+Hekate payloads 二次引导软件：
  
 ENDOFFILE
 ###
@@ -282,6 +282,7 @@ curl -H "$API_AUTH" -sL https://api.github.com/repos/StarDustCFW/Haku33/releases
 #else
 #    echo "linkalho download\033[32m success\033[0m."
 #    echo linkalho >> ../description.txt
+#    unzip -oq linkalho.zip
 #    rm linkalho.zip
 #fi
 
@@ -295,7 +296,12 @@ ENDOFFILE
 curl -H "$API_AUTH" -sL https://api.github.com/repos/ITotalJustice/sphaira/releases/latest \
   | jq '.tag_name' \
   | xargs -I {} echo sphaira {} >> ../description.txt
-  
+
+### Fetch lastest Checkpoint from https://github.com/BernardoGiordano/Checkpoint/releases/latest
+curl -H "$API_AUTH" -sL https://api.github.com/repos/BernardoGiordano/Checkpoint/releases/latest \
+  | jq '.tag_name' \
+  | xargs -I {} echo Checkpoint {} >> ../description.txt
+
 # -------------------------------------------
 
 ###
@@ -333,7 +339,6 @@ curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/nx-ovlloader/re
 #    rm Tesla-Menu.zip
 #fi
 
-#保留压缩包Tesla-Menu.zip
 ### Fetch lastest Tesla-Menu from https://github.com/zdm65477730/Tesla-Menu/releases/latest
 #curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/Tesla-Menu/releases/latest \
 #  | jq '.tag_name' \
