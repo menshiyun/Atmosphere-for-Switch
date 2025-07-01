@@ -37,6 +37,7 @@
     - [x] 系统洗白 工具 `Haku33` [From Here](https://github.com/StarDustCFW/Haku33/releases/latest)
     - [x] 离线关联账号 `linkalho` [From Here](https://github.com/)
     - [x] 相册软件管理 工具 `sphaira` [From Here](https://github.com/ITotalJustice/sphaira/releases/latest)
+    - [x] 游戏存档管理工具 `Checkpoint` [From Here](https://github.com/BernardoGiordano/Checkpoint/releases/latest)
 
   - 补丁
     - [x] 主题破解 `theme-patches` [From Here](https://github.com/exelix11/theme-patches)
