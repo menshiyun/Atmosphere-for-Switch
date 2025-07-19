@@ -1086,10 +1086,6 @@ enable_htc = u8!0x0
 enable_log_manager = u8!0x0
 enable_external_bluetooth_db = u8!0x1
 
-[hbloader]
-applet_heap_size = u64!0x0
-applet_heap_reservation_size = u64!0x8600000
-
 [ns.notification]
 enable_download_task_list = u8!0x0
 enable_download_ticket = u8!0x0
@@ -1103,6 +1099,10 @@ retry_interval_min = u32!0x7FFFFFFF
 retry_interval_max = u32!0x7FFFFFFF
 version_list_waiting_limit_bias = u32!0x7FFFFFFF
 version_list_waiting_limit_min = u32!0x7FFFFFFF
+
+[hbloader]
+applet_heap_size = u64!0x0
+applet_heap_reservation_size = u64!0x8600000
 ENDOFFILE
 if [ $? -ne 0 ]; then
     echo "Writing system_settings.ini in ./atmosphere/config\033[31m failed\033[0m."
