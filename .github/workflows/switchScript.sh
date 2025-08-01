@@ -93,9 +93,9 @@ fi
 #fi
 
 ###
-cat >> ../description.txt << ENDOFFILE
-sigpatches
-ENDOFFILE
+#cat >> ../description.txt << ENDOFFILE
+#sigpatches
+#ENDOFFILE
 ###
 
 ### Fetch sys-patch from https://github.com/impeeza/sys-patch/releases/latest
@@ -343,17 +343,6 @@ else
     mkdir -p ./switch/JKSV
     mv JKSV.nro ./switch/JKSV
 fi
-
-### Write webdav.json in /config/JKSV/webdav.json
-mkdir -p ./config/JKSV
-cat > ./config/JKSV/webdav.json << ENDOFFILE
-{
-  "origin": "示例：https://dav.jianguoyun.com",
-  "basepath": "示例：dav/switch",
-  "username": "示例：gzk_47@qq.com",
-  "password": "示例：agc6yix8mvvjs8xz47"
-}
-ENDOFFILE
 
 ### Fetch lastest tencent-switcher-gui from https://github.com/CaiMiao/Tencent-switcher-GUI/releases/latest
 curl -H "$API_AUTH" -sL https://api.github.com/repos/CaiMiao/Tencent-switcher-GUI/releases/latest \
@@ -623,37 +612,6 @@ else
     rm linkalho.zip
 fi
 
-### Fetch lastest sphaira from https://github.com/ITotalJustice/sphaira/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/ITotalJustice/sphaira/releases/latest \
-  | jq '.tag_name' \
-  | xargs -I {} echo sphaira {} >> ../description.txt
-curl -H "$API_AUTH" -sL https://api.github.com/repos/ITotalJustice/sphaira/releases/latest \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*sphaira[^"]*.zip"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o sphaira.zip
-if [ $? -ne 0 ]; then
-    echo "sphaira download\033[31m failed\033[0m."
-else
-    echo "sphaira download\033[32m success\033[0m."
-    unzip -oq sphaira.zip
-    rm sphaira.zip
-fi
-
-### Write config.ini in /config/sphaira/config.ini
-mkdir -p ./config/sphaira
-cat > ./config/sphaira/config.ini << ENDOFFILE
-[paths]
-last_path=/
-[config]
-theme=romfs:/themes/white_theme.ini
-language=7
-replace_hbmenu=0
-install_emummc=1
-left_side_menu=Games
-[games]
-layout=2
-ENDOFFILE
-
 ### Fetch lastest Checkpoint from https://github.com/BernardoGiordano/Checkpoint/releases/latest
 curl -H "$API_AUTH" -sL https://api.github.com/repos/BernardoGiordano/Checkpoint/releases/latest \
   | jq '.tag_name' \
@@ -762,10 +720,10 @@ fi
 
 ### Fetch Ultrahand-Overlay
 ## Fetch latest Ultrahand-Overlay from https://github.com/zdm65477730/Ultrahand-Overlay
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/Ultrahand-Overlay/releases/latest \
+curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/Ultrahand-Overlay/releases/tags/1.9.5 \
   | jq '.tag_name' \
   | xargs -I {} echo Ultrahand-Overlay {} >> ../description.txt
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/Ultrahand-Overlay/releases/latest \
+curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/Ultrahand-Overlay/releases/tags/1.9.5 \
   | grep -oP '"browser_download_url": "\Khttps://[^"]*Ultrahand[^"]*.zip"' \
   | sed 's/"//g' \
   | xargs -I {} curl -sL {} -o Ultrahand.zip
@@ -1173,23 +1131,6 @@ fi
 
 # -------------------------------------------
 
-###
-cat >> ../description.txt << ENDOFFILE
- 
-------------------------------
- 
-极限超频替换包：（ 覆盖到【特斯拉版】心悦整合包上替换 ）
- 
-ENDOFFILE
-###
-
-### Fetch latest EOS-OC-Suite sys-clk.zip from https://github.com/halop/OC_Toolkit_SC_EOS/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/halop/OC_Toolkit_SC_EOS/releases/latest \
-  | jq '.tag_name' \
-  | xargs -I {} echo EOS{}-OC-Suite >> ../description.txt
-
-# -------------------------------------------
-
 ### Rename hekate_ctcaer_*.bin to payload.bin
 find . -name "*hekate_ctcaer*" -exec mv {} payload.bin \;
 if [ $? -ne 0 ]; then
@@ -1541,10 +1482,7 @@ cat >> ../description.txt << ENDOFFILE
  
 ------------------------------
  
-SwitchSD-Pure  为：纯净版
-SwitchSD-Tesla 为：特斯拉版
 SwitchSD       为：特斯拉版+sys-patch
-EOS-OC-Suite   为：极限超频替换包
  
 ENDOFFILE
 ###
