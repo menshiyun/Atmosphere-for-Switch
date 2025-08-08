@@ -730,7 +730,7 @@ else
     unzip -oq OC.Toolkit.zip
     rm OC.Toolkit.zip
     mkdir -p ./switch/.packages
-    mv OC Toolkit ./switch/.packages/OC Toolkit
+    mv "OC Toolkit" ./switch/.packages/"OC Toolkit"
 fi
 # -------------------------------------------
 
