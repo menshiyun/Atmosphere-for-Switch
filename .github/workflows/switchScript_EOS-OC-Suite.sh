@@ -715,6 +715,23 @@ else
     mv loader.kip ./atmosphere/kips
 fi
 
+### Fetch latest EOS-OC-Suite OC.Toolkit.zip from https://github.com/halop/OC_Toolkit_SC_EOS/releases/latest
+#curl -H "$API_AUTH" -sL https://api.github.com/repos/halop/OC_Toolkit_SC_EOS/releases/latest \
+#  | jq '.name' \
+#  | xargs -I {} echo {} >> ../description.txt
+curl -H "$API_AUTH" -sL https://api.github.com/repos/halop/OC_Toolkit_SC_EOS/releases/latest \
+  | grep -oP '"browser_download_url": "\Khttps://[^"]*OC.Toolkit.zip' \
+  | sed 's/"//g' \
+  | xargs -I {} curl -sL {} -o OC.Toolkit.zip
+if [ $? -ne 0 ]; then
+    echo "OC.Toolkit download\033[31m failed\033[0m."
+else
+    echo "OC.Toolkit download\033[32m success\033[0m."
+    unzip -oq OC.Toolkit.zip
+    rm OC.Toolkit.zip
+    mkdir -p ./switch/.packages
+    mv OC Toolkit ./switch/.packages/OC Toolkit
+fi
 # -------------------------------------------
 
 ### Delete unneeded files
