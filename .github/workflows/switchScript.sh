@@ -913,11 +913,12 @@ ENDOFFILE
 #fi
 
 ## Fetch lastest Status-Monitor-Overlay from https://github.com/zdm65477730/Status-Monitor-Overlay/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/zdm65477730/Status-Monitor-Overlay/releases/latest
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/zdm65477730/Status-Monitor-Overlay/releases
 cat latest.json \
-  | jq '.tag_name' \
+  | jq 'first(.[]|select(.assets|any(.name|test("^StatusMonitor.*\\.zip$")))).tag_name' \
   | xargs -I {} echo StatusMonitor {} >> ../description.txt
 cat latest.json \
+  | jq 'first(.[]|select(.assets|any(.name|test("^StatusMonitor.*\\.zip$"))))' \
   | grep -oP '"browser_download_url": "\Khttps://[^"]*StatusMonitor[^"]*.zip"' \
   | sed 's/"//g' \
   | xargs -I {} curl -sL {} -o StatusMonitor.zip
