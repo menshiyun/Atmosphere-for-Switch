@@ -36,13 +36,15 @@ cat >> ../description.txt << ENDOFFILE
 ENDOFFILE
 
 ### Fetch latest atmosphere from https://github.com/Atmosphere-NX/Atmosphere/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/Atmosphere-NX/Atmosphere/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/Atmosphere-NX/Atmosphere/releases/latest
+cat latest.json \
   | jq '.name' \
   | xargs -I {} echo {} >> ../description.txt
 
 
 ### Fetch Hekate + Nyx CHS from https://github.com/easyworld/hekate/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/easyworld/hekate/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/easyworld/hekate/releases/latest
+cat latest.json \
   | jq '.name' \
   | xargs -I {} echo {} >> ../description.txt
 
@@ -65,7 +67,8 @@ ENDOFFILE
 ###
 
 ### Fetch sys-patch from https://github.com/impeeza/sys-patch/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/impeeza/sys-patch/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/impeeza/sys-patch/releases/latest
+cat latest.json \
   | jq '.name' \
   | xargs -I {} echo {} >> ../description.txt
 #curl -H "$API_AUTH" -sL https://api.github.com/repos/impeeza/sys-patch/releases/latest \
@@ -109,10 +112,11 @@ ENDOFFILE
 #fi
 
 ### Fetch lastest Lockpick_RCMDecScots from https://github.com/zdm65477730/Lockpick_RCMDecScots/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/Lockpick_RCMDecScots/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/zdm65477730/Lockpick_RCMDecScots/releases/latest
+cat latest.json \
   | jq '.tag_name' \
   | xargs -I {} echo Lockpick_RCM {} >> ../description.txt
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/Lockpick_RCMDecScots/releases/latest \
+cat latest.json \
   | grep -oP '"browser_download_url": "\Khttps://[^"]*Lockpick_RCM.bin"' \
   | sed 's/"//g' \
   | xargs -I {} curl -sL {} -o Lockpick_RCM.bin
@@ -125,10 +129,11 @@ else
 fi
 
 ### Fetch latest TegraExplorer.bin form https://github.com/zdm65477730/TegraExplorer/releases
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/TegraExplorer/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/zdm65477730/TegraExplorer/releases/latest
+cat latest.json \
   | jq '.tag_name' \
   | xargs -I {} echo TegraExplorer {} >> ../description.txt
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/TegraExplorer/releases/latest \
+cat latest.json \
   | grep -oP '"browser_download_url": "\Khttps://[^"]*TegraExplorer.bin"' \
   | sed 's/"//g' \
   | xargs -I {} curl -sL {} -o TegraExplorer.bin
@@ -140,10 +145,11 @@ else
 fi
 
 ### Fetch latest CommonProblemResolver.bin form https://github.com/zdm65477730/CommonProblemResolver/releases
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/CommonProblemResolver/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/zdm65477730/CommonProblemResolver/releases/latest
+cat latest.json \
   | jq '.tag_name' \
   | xargs -I {} echo CommonProblemResolver {} >> ../description.txt
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/CommonProblemResolver/releases/latest \
+cat latest.json \
   | grep -oP '"browser_download_url": "\Khttps://[^"]*CommonProblemResolver.bin"' \
   | sed 's/"//g' \
   | xargs -I {} curl -sL {} -o CommonProblemResolver.bin
@@ -167,30 +173,35 @@ ENDOFFILE
 ###
 
 ### Fetch lastest Switch_90DNS_tester from https://github.com/meganukebmp/Switch_90DNS_tester/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/meganukebmp/Switch_90DNS_tester/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/meganukebmp/Switch_90DNS_tester/releases/latest
+cat latest.json \
   | jq '.tag_name' \
   | xargs -I {} echo Switch_90DNS_tester {} >> ../description.txt
 
 ### Fetch lastest DBI from https://github.com/rashevskyv/dbi/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/rashevskyv/dbi/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/rashevskyv/dbi/releases/latest
+cat latest.json \
   | jq '.name' \
   | xargs -I {} echo {} >> ../description.txt
 
 ### Fetch lastest Awoo Installer from https://github.com/dragonflylee/Awoo-Installer/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/dragonflylee/Awoo-Installer/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/dragonflylee/Awoo-Installer/releases/latest
+cat latest.json \
   | jq '.name' \
   | xargs -I {} echo {} >> ../description.txt
 
 ### Fetch lastest DeepSeaToolbox from https://github.com/Team-Neptune/DeepSea-Toolbox/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/Team-Neptune/DeepSea-Toolbox/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/Team-Neptune/DeepSea-Toolbox/releases/latest
+cat latest.json \
   | jq '.tag_name' \
   | xargs -I {} echo DeepSeaToolbox {} >> ../description.txt
 
 ### Fetch lastest NX-Activity-Log from https://github.com/zdm65477730/NX-Activity-Log/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/NX-Activity-Log/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/zdm65477730/NX-Activity-Log/releases/latest
+cat latest.json \
   | jq '.tag_name' \
   | xargs -I {} echo NX-Activity-Log {} >> ../description.txt
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/NX-Activity-Log/releases/latest \
+cat latest.json \
   | grep -oP '"browser_download_url": "\Khttps://[^"]*NX-Activity-Log.nro"' \
   | sed 's/"//g' \
   | xargs -I {} curl -sL {} -o NX-Activity-Log.nro
@@ -203,55 +214,65 @@ else
 fi
 
 ### Fetch lastest NXThemesInstaller from https://github.com/exelix11/SwitchThemeInjector/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/exelix11/SwitchThemeInjector/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/exelix11/SwitchThemeInjector/releases/latest
+cat latest.json \
   | jq '.tag_name' \
   | xargs -I {} echo NXThemesInstaller {} >> ../description.txt
 
 ### Fetch lastest JKSV from https://github.com/J-D-K/JKSV/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/J-D-K/JKSV/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/J-D-K/JKSV/releases/latest
+cat latest.json \
   | jq '.name' \
   | xargs -I {} echo JKSV {} >> ../description.txt
 
 ### Fetch lastest tencent-switcher-gui from https://github.com/CaiMiao/Tencent-switcher-GUI/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/CaiMiao/Tencent-switcher-GUI/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/CaiMiao/Tencent-switcher-GUI/releases/latest
+cat latest.json \
   | jq '.tag_name' \
   | xargs -I {} echo tencent-switcher-gui {} >> ../description.txt
 
 ### Fetch lastest aio-switch-updater from https://github.com/HamletDuFromage/aio-switch-updater/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/HamletDuFromage/aio-switch-updater/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/HamletDuFromage/aio-switch-updater/releases/latest
+cat latest.json \
   | jq '.tag_name' \
   | xargs -I {} echo aio-switch-updater {} >> ../description.txt
 
 ### Fetch lastest wiliwili from https://github.com/xfangfang/wiliwili/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/xfangfang/wiliwili/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/xfangfang/wiliwili/releases/latest
+cat latest.json \
   | jq '.tag_name' \
   | xargs -I {} echo wiliwili {} >> ../description.txt
 
 ### Fetch lastest SimpleModDownloader from https://github.com/PoloNX/SimpleModDownloader/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/PoloNX/SimpleModDownloader/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/PoloNX/SimpleModDownloader/releases/latest
+cat latest.json \
   | jq '.tag_name' \
   | xargs -I {} echo SimpleModDownloader {} >> ../description.txt
 
 ### Fetch lastest SimpleModManager from https://github.com/nadrino/SimpleModManager/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/nadrino/SimpleModManager/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/nadrino/SimpleModManager/releases/latest
+cat latest.json \
   | jq '.tag_name' \
   | xargs -I {} echo SimpleModManager {} >> ../description.txt
 
 ### Fetch lastest Switchfin from https://github.com/dragonflylee/switchfin/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/dragonflylee/switchfin/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/dragonflylee/switchfin/releases/latest
+cat latest.json \
   | jq '.tag_name' \
   | xargs -I {} echo Switchfin {} >> ../description.txt
 
 ### Fetch lastest Moonlight from https://github.com/XITRIX/Moonlight-Switch/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/XITRIX/Moonlight-Switch/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/XITRIX/Moonlight-Switch/releases/latest
+cat latest.json \
   | jq '.tag_name' \
   | xargs -I {} echo Moonlight {} >> ../description.txt
 
 ### Fetch NX-Shell from https://github.com/zdm65477730/NX-Shell/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/NX-Shell/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/zdm65477730/NX-Shell/releases/latest
+cat latest.json \
   | jq '.tag_name' \
   | xargs -I {} echo NX-Shell {} >> ../description.txt
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/NX-Shell/releases/latest \
+cat latest.json \
   | grep -oP '"browser_download_url": "\Khttps://[^"]*NX-Shell.nro"' \
   | sed 's/"//g' \
   | xargs -I {} curl -sL {} -o NX-Shell.nro
@@ -264,15 +285,17 @@ else
 fi
 
 ### Fetch lastest hb-appstore from https://github.com/fortheusers/hb-appstore/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/fortheusers/hb-appstore/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/fortheusers/hb-appstore/releases/latest
+cat latest.json \
   | jq '.tag_name' \
   | xargs -I {} echo hb-appstore {} >> ../description.txt
 
 ### Fetch lastest ReverseNX-Tool from https://github.com/masagrator/ReverseNX-Tool/releases
-curl -H "$API_AUTH" -sL https://api.github.com/repos/masagrator/ReverseNX-Tool/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/masagrator/ReverseNX-Tool/releases/latest
+cat latest.json \
   | jq '.tag_name' \
   | xargs -I {} echo ReverseNX-Tool {} >> ../description.txt
-curl -H "$API_AUTH" -sL https://api.github.com/repos/masagrator/ReverseNX-Tool/releases/latest \
+cat latest.json \
   | grep -oP '"browser_download_url": "\Khttps://[^"]*ReverseNX-Tool.nro"' \
   | sed 's/"//g' \
   | xargs -I {} curl -sL {} -o ReverseNX-Tool.nro
@@ -285,12 +308,14 @@ else
 fi
 
 ### Fetch lastest Goldleaf from https://github.com/XorTroll/Goldleaf/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/XorTroll/Goldleaf/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/XorTroll/Goldleaf/releases/latest
+cat latest.json \
   | jq '.tag_name' \
   | xargs -I {} echo Goldleaf {} >> ../description.txt
 
 ### Fetch lastest Safe_Reboot_Shutdown from https://github.com/dezem/Safe_Reboot_Shutdown/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/dezem/Safe_Reboot_Shutdown/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/dezem/Safe_Reboot_Shutdown/releases/latest
+cat latest.json \
   | jq '.tag_name' \
   | xargs -I {} echo Safe_Reboot_Shutdown {} >> ../description.txt
 
@@ -311,7 +336,8 @@ curl -H "$API_AUTH" -sL https://api.github.com/repos/dezem/Safe_Reboot_Shutdown/
 #fi
 
 ### Fetch lastest Firmware-Dumper【Chinese lang】 from https://github.com/zdm65477730/Switch-Firmware-Dumper/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/Switch-Firmware-Dumper/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/zdm65477730/Switch-Firmware-Dumper/releases/latest
+cat latest.json \
   | jq '.tag_name' \
   | xargs -I {} echo Firmware-Dumper {} >> ../description.txt
 
@@ -333,7 +359,8 @@ ENDOFFILE
 ###
 
 ### Fetch lastest Haku33 from https://github.com/StarDustCFW/Haku33/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/StarDustCFW/Haku33/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/StarDustCFW/Haku33/releases/latest
+cat latest.json \
   | jq '.tag_name' \
   | xargs -I {} echo Haku33 {} >> ../description.txt
 
@@ -355,12 +382,14 @@ ENDOFFILE
 ###
 
 ### Fetch lastest sphaira from https://github.com/ITotalJustice/sphaira/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/ITotalJustice/sphaira/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/ITotalJustice/sphaira/releases/latest
+cat latest.json \
   | jq '.tag_name' \
   | xargs -I {} echo sphaira {} >> ../description.txt
 
 ### Fetch lastest Checkpoint from https://github.com/BernardoGiordano/Checkpoint/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/BernardoGiordano/Checkpoint/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/BernardoGiordano/Checkpoint/releases/latest
+cat latest.json \
   | jq '.tag_name' \
   | xargs -I {} echo Checkpoint {} >> ../description.txt
 
@@ -387,10 +416,11 @@ ENDOFFILE
 #fi
 
 ## Fetch lastest nx-ovlloader from https://github.com/zdm65477730/nx-ovlloader/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/nx-ovlloader/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/zdm65477730/nx-ovlloader/releases/latest
+cat latest.json \
   | jq '.tag_name' \
   | xargs -I {} echo nx-ovlloader {} >> ../description.txt
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/nx-ovlloader/releases/latest \
+cat latest.json \
   | grep -oP '"browser_download_url": "\Khttps://[^"]*nx-ovlloader[^"]*.zip"' \
   | sed 's/"//g' \
   | xargs -I {} curl -sL {} -o nx-ovlloader.zip
@@ -428,7 +458,8 @@ fi
 #curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/Tesla-Menu/releases/latest \
 #  | jq '.tag_name' \
 #  | xargs -I {} echo Tesla-Menu {} >> ../description.txt
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/Tesla-Menu/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/zdm65477730/Tesla-Menu/releases/latest
+cat latest.json \
   | grep -oP '"browser_download_url": "\Khttps://[^"]*Tesla-Menu[^"]*.zip"' \
   | sed 's/"//g' \
   | xargs -I {} curl -sL {} -o Tesla-Menu.zip
@@ -457,10 +488,11 @@ fi
 
 ### Fetch Ultrahand-Overlay
 ## Fetch latest Ultrahand-Overlay from https://github.com/zdm65477730/Ultrahand-Overlay
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/Ultrahand-Overlay/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/zdm65477730/Ultrahand-Overlay/releases/latest
+cat latest.json \
   | jq '.tag_name' \
   | xargs -I {} echo Ultrahand-Overlay {} >> ../description.txt
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/Ultrahand-Overlay/releases/latest \
+cat latest.json \
   | grep -oP '"browser_download_url": "\Khttps://[^"]*Ultrahand[^"]*.zip"' \
   | sed 's/"//g' \
   | xargs -I {} curl -sL {} -o Ultrahand.zip
@@ -539,10 +571,11 @@ mv ./config/Ultrahand ./config/ultrahand
 #fi
 
 ## Fetch lastest ovl-sysmodules from https://github.com/zdm65477730/ovl-sysmodules/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/ovl-sysmodules/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/zdm65477730/ovl-sysmodules/releases/latest
+cat latest.json \
   | jq '.tag_name' \
   | xargs -I {} echo ovl-sysmodules {} >> ../description.txt
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/ovl-sysmodules/releases/latest \
+cat latest.json \
   | grep -oP '"browser_download_url": "\Khttps://[^"]*ovl-sysmodules[^"]*.zip"' \
   | sed 's/"//g' \
   | xargs -I {} curl -sL {} -o ovl-sysmodules.zip
@@ -576,10 +609,11 @@ ENDOFFILE
 #fi
 
 ## Fetch lastest Status-Monitor-Overlay from https://github.com/zdm65477730/Status-Monitor-Overlay/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/Status-Monitor-Overlay/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/zdm65477730/Status-Monitor-Overlay/releases/latest
+cat latest.json \
   | jq '.tag_name' \
   | xargs -I {} echo StatusMonitor {} >> ../description.txt
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/Status-Monitor-Overlay/releases/latest \
+cat latest.json \
   | grep -oP '"browser_download_url": "\Khttps://[^"]*StatusMonitor[^"]*.zip"' \
   | sed 's/"//g' \
   | xargs -I {} curl -sL {} -o StatusMonitor.zip
@@ -602,10 +636,11 @@ fi
 #fi
 
 ## Fetch lastest EdiZon-Overlay from https://github.com/zdm65477730/EdiZon-Overlay/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/EdiZon-Overlay/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/zdm65477730/EdiZon-Overlay/releases/latest
+cat latest.json \
   | jq '.tag_name' \
   | xargs -I {} echo EdiZon {} >> ../description.txt
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/EdiZon-Overlay/releases/latest \
+cat latest.json \
   | grep -oP '"browser_download_url": "\Khttps://[^"]*EdiZon[^"]*.zip"' \
   | sed 's/"//g' \
   | xargs -I {} curl -sL {} -o EdiZon.zip
@@ -629,10 +664,11 @@ fi
 #fi
 
 ## Fetch lastest ReverseNX-RT from https://github.com/zdm65477730/ReverseNX-RT/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/ReverseNX-RT/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/zdm65477730/ReverseNX-RT/releases/latest
+cat latest.json \
   | jq '.tag_name' \
   | xargs -I {} echo ReverseNX-RT {} >> ../description.txt
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/ReverseNX-RT/releases/latest \
+cat latest.json \
   | grep -oP '"browser_download_url": "\Khttps://[^"]*ReverseNX-RT[^"]*.zip"' \
   | sed 's/"//g' \
   | xargs -I {} curl -sL {} -o ReverseNX-RT.zip
@@ -667,10 +703,11 @@ fi
 #fi
 
 ## Fetch lastest sys-clk from https://github.com/zdm65477730/sys-clk/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/sys-clk/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/zdm65477730/sys-clk/releases/latest
+cat latest.json \
   | jq '.tag_name' \
   | xargs -I {} echo sys-clk {} >> ../description.txt
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/sys-clk/releases/latest \
+cat latest.json \
   | grep -oP '"browser_download_url": "\Khttps://[^"]*sys-clk[^"]*.zip"' \
   | sed 's/"//g' \
   | xargs -I {} curl -sL {} -o sys-clk.zip
@@ -693,10 +730,11 @@ fi
 #fi
 
 ## Fetch lastest emuiibo from https://github.com/zdm65477730/emuiibo/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/emuiibo/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/zdm65477730/emuiibo/releases/latest
+cat latest.json \
   | jq '.tag_name' \
   | xargs -I {} echo emuiibo {} >> ../description.txt
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/emuiibo/releases/latest \
+cat latest.json \
   | grep -oP '"browser_download_url": "\Khttps://[^"]*emuiibo[^"]*.zip"' \
   | sed 's/"//g' \
   | xargs -I {} curl -sL {} -o emuiibo.zip
@@ -719,10 +757,11 @@ fi
 #fi
 
 ## Fetch lastest ldn_mitm from https://github.com/zdm65477730/ldn_mitm/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/ldn_mitm/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/zdm65477730/ldn_mitm/releases/latest
+cat latest.json \
   | jq '.tag_name' \
   | xargs -I {} echo ldn_mitm {} >> ../description.txt
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/ldn_mitm/releases/latest \
+cat latest.json \
   | grep -oP '"browser_download_url": "\Khttps://[^"]*ldn_mitm[^"]*.zip"' \
   | sed 's/"//g' \
   | xargs -I {} curl -sL {} -o ldn_mitm.zip
@@ -745,10 +784,11 @@ fi
 #fi
 
 ## Fetch lastest QuickNTP from https://github.com/zdm65477730/QuickNTP/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/QuickNTP/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/zdm65477730/QuickNTP/releases/latest
+cat latest.json \
   | jq '.tag_name' \
   | xargs -I {} echo QuickNTP {} >> ../description.txt
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/QuickNTP/releases/latest \
+cat latest.json \
   | grep -oP '"browser_download_url": "\Khttps://[^"]*QuickNTP[^"]*.zip"' \
   | sed 's/"//g' \
   | xargs -I {} curl -sL {} -o QuickNTP.zip
@@ -771,10 +811,11 @@ fi
 #fi
 
 ## Fetch lastest sysdvr-overlay from https://github.com/zdm65477730/sysdvr-overlay/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/sysdvr-overlay/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/zdm65477730/sysdvr-overlay/releases/latest
+cat latest.json \
   | jq '.tag_name' \
   | xargs -I {} echo SysDVR {} >> ../description.txt
-curl -H "$API_AUTH" -sL https://api.github.com/repos/zdm65477730/sysdvr-overlay/releases/latest \
+cat latest.json \
   | grep -oP '"browser_download_url": "\Khttps://[^"]*SysDVR[^"]*.zip"' \
   | sed 's/"//g' \
   | xargs -I {} curl -sL {} -o SysDVR.zip
@@ -835,10 +876,11 @@ fi
 ###
 
 ### Fetch MissionControl from https://github.com//ndeadly/MissionControl/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/ndeadly/MissionControl/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/ndeadly/MissionControl/releases/latest
+cat latest.json \
   | jq '.tag_name' \
   | xargs -I {} echo MissionControl {} >> ../description.txt
-curl -H "$API_AUTH" -sL https://api.github.com/repos/ndeadly/MissionControl/releases/latest \
+cat latest.json \
   | grep -oP '"browser_download_url": "\Khttps://[^"]*MissionControl[^"]*.zip"' \
   | sed 's/"//g' \
   | xargs -I {} curl -sL {} -o MissionControl.zip
@@ -851,10 +893,11 @@ else
 fi
 
 ## Fetch lastest sys-con from https://github.com/o0Zz/sys-con/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/o0Zz/sys-con/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/o0Zz/sys-con/releases/latest
+cat latest.json \
   | jq '.name' \
   | xargs -I {} echo sys-con {} >> ../description.txt
-curl -H "$API_AUTH" -sL https://api.github.com/repos/o0Zz/sys-con/releases/latest \
+cat latest.json \
   | grep -oP '"browser_download_url": "\Khttps://[^"]*sys-con[^"]*.zip"' \
   | sed 's/"//g' \
   | xargs -I {} curl -sL {} -o sys-con.zip
@@ -879,7 +922,8 @@ ENDOFFILE
 ###
 
 ### Fetch latest EOS-OC-Suite sys-clk.zip from https://github.com/halop/OC_Toolkit_SC_EOS/releases/latest
-curl -H "$API_AUTH" -sL https://api.github.com/repos/halop/OC_Toolkit_SC_EOS/releases/latest \
+curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/halop/OC_Toolkit_SC_EOS/releases/latest
+cat latest.json \
   | jq '.tag_name' \
   | xargs -I {} echo EOS{}-OC-Suite >> ../description.txt
 
@@ -895,6 +939,7 @@ rm -f switch/haze.nro
 rm -f switch/reboot_to_hekate.nro
 rm -f switch/reboot_to_payload.nro
 rm -rf mods
+rm -f latest.json
 
 ### Delete boot2 files
 rm -f atmosphere/contents/00FF0000A53BB665/flags/*.*
