@@ -5,6 +5,7 @@ set -e
 ### Script created by Fraxalotl
 ### Mod by huangqian8
 ### Mod by gzk_47
+### Mod by menshiyun
 
 # -------------------------------------------
 
@@ -677,9 +678,6 @@ theme=romfs:/themes/white_theme.ini
 language=7
 replace_hbmenu=0
 install_emummc=1
-left_side_menu=Games
-[games]
-layout=2
 ENDOFFILE
 
 ### Fetch lastest Checkpoint from https://github.com/BernardoGiordano/Checkpoint/releases/latest
