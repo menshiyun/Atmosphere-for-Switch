@@ -1,5 +1,5 @@
 #!/bin/sh
-set -e
+set -eu
 
 ### Credit to the Authors at https://rentry.org/CFWGuides
 ### Script created by Fraxalotl
@@ -12,6 +12,7 @@ set -e
 ### GitHub API Headers
 API_AUTH="Authorization: Bearer $GITHUB_TOKEN"
 API_VER="X-GitHub-Api-Version: 2022-11-28"
+API_FILE="github-api.json"
 
 # -------------------------------------------
 
@@ -37,14 +38,13 @@ cat >> ../description.txt << ENDOFFILE
 ENDOFFILE
 
 ### Fetch latest atmosphere from https://github.com/Atmosphere-NX/Atmosphere/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/Atmosphere-NX/Atmosphere/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/Atmosphere-NX/Atmosphere/releases/latest
+cat $API_FILE \
   | jq '.name' \
   | xargs -I {} echo {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*atmosphere[^"]*.zip' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o atmosphere.zip
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*atmosphere[^"]*.zip' \
+  | xargs -I {} curl -fsSL {} -o atmosphere.zip
 if [ $? -ne 0 ]; then
     echo "atmosphere download\033[31m failed\033[0m."
 else
@@ -54,10 +54,9 @@ else
 fi
 
 ### Fetch latest fusee.bin from https://github.com/Atmosphere-NX/Atmosphere/releases/latest
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*fusee.bin"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o fusee.bin
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*fusee.bin' \
+  | xargs -I {} curl -fsSL {} -o fusee.bin
 if [ $? -ne 0 ]; then
     echo "fusee download\033[31m failed\033[0m."
 else
@@ -67,14 +66,13 @@ else
 fi
 
 ### Fetch Hekate + Nyx CHS from https://github.com/easyworld/hekate/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/easyworld/hekate/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/easyworld/hekate/releases/latest
+cat $API_FILE \
   | jq '.name' \
   | xargs -I {} echo {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*hekate_ctcaer[^"]*_sc.zip"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o hekate.zip
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*hekate_ctcaer[^"]*_sc.zip' \
+  | xargs -I {} curl -fsSL {} -o hekate.zip
 if [ $? -ne 0 ]; then
     echo "Hekate + Nyx CHS download\033[31m failed\033[0m."
 else
@@ -102,14 +100,13 @@ ENDOFFILE
 ###
 
 ### Fetch sys-patch from https://github.com/impeeza/sys-patch/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/impeeza/sys-patch/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/impeeza/sys-patch/releases/latest
+cat $API_FILE \
   | jq '.name' \
   | xargs -I {} echo {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*sys-patch.zip"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o sys-patch.zip
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*sys-patch.zip' \
+  | xargs -I {} curl -fsSL {} -o sys-patch.zip
 if [ $? -ne 0 ]; then
     echo "sys-patch download\033[31m failed\033[0m."
 else
@@ -169,14 +166,13 @@ ENDOFFILE
 #fi
 
 ### Fetch lastest Lockpick_RCMDecScots from https://github.com/zdm65477730/Lockpick_RCMDecScots/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/zdm65477730/Lockpick_RCMDecScots/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/zdm65477730/Lockpick_RCMDecScots/releases/latest
+cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo Lockpick_RCM {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*Lockpick_RCM.bin"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o Lockpick_RCM.bin
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*Lockpick_RCM.bin' \
+  | xargs -I {} curl -fsSL {} -o Lockpick_RCM.bin
 if [ $? -ne 0 ]; then
     echo "Lockpick_RCM download\033[31m failed\033[0m."
 else
@@ -186,14 +182,13 @@ else
 fi
 
 ### Fetch latest TegraExplorer.bin form https://github.com/zdm65477730/TegraExplorer/releases
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/zdm65477730/TegraExplorer/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/zdm65477730/TegraExplorer/releases/latest
+cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo TegraExplorer {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*TegraExplorer.bin"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o TegraExplorer.bin
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*TegraExplorer.bin' \
+  | xargs -I {} curl -fsSL {} -o TegraExplorer.bin
 if [ $? -ne 0 ]; then
     echo "TegraExplorer download\033[31m failed\033[0m."
 else
@@ -212,14 +207,13 @@ fi
 #fi
 
 ### Fetch latest CommonProblemResolver.bin form https://github.com/zdm65477730/CommonProblemResolver/releases
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/zdm65477730/CommonProblemResolver/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/zdm65477730/CommonProblemResolver/releases/latest
+cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo CommonProblemResolver {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*CommonProblemResolver.bin"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o CommonProblemResolver.bin
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*CommonProblemResolver.bin' \
+  | xargs -I {} curl -fsSL {} -o CommonProblemResolver.bin
 if [ $? -ne 0 ]; then
     echo "CommonProblemResolver download\033[31m failed\033[0m."
 else
@@ -240,14 +234,13 @@ ENDOFFILE
 ###
 
 ### Fetch lastest Switch_90DNS_tester from https://github.com/meganukebmp/Switch_90DNS_tester/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/meganukebmp/Switch_90DNS_tester/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/meganukebmp/Switch_90DNS_tester/releases/latest
+cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo Switch_90DNS_tester {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*Switch_90DNS_tester.nro"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o Switch_90DNS_tester.nro
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*Switch_90DNS_tester.nro' \
+  | xargs -I {} curl -fsSL {} -o Switch_90DNS_tester.nro
 if [ $? -ne 0 ]; then
     echo "Switch_90DNS_tester download\033[31m failed\033[0m."
 else
@@ -257,14 +250,13 @@ else
 fi
 
 ### Fetch lastest DBI from https://github.com/rashevskyv/dbi/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/rashevskyv/dbi/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/rashevskyv/dbi/releases/latest
+cat $API_FILE \
   | jq '.name' \
   | xargs -I {} echo {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*DBI.nro"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o DBI.nro
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*DBI.nro' \
+  | xargs -I {} curl -fsSL {} -o DBI.nro
 if [ $? -ne 0 ]; then
     echo "DBI download\033[31m failed\033[0m."
 else
@@ -274,14 +266,13 @@ else
 fi
 
 ### Fetch lastest Awoo Installer from https://github.com/dragonflylee/Awoo-Installer/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/dragonflylee/Awoo-Installer/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/dragonflylee/Awoo-Installer/releases/latest
+cat $API_FILE \
   | jq '.name' \
   | xargs -I {} echo {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*Awoo-Installer.zip"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o Awoo-Installer.zip
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*Awoo-Installer.zip' \
+  | xargs -I {} curl -fsSL {} -o Awoo-Installer.zip
 if [ $? -ne 0 ]; then
     echo "Awoo Installer download\033[31m failed\033[0m."
 else
@@ -291,14 +282,13 @@ else
 fi
 
 ### Fetch lastest DeepSeaToolbox from https://github.com/Team-Neptune/DeepSea-Toolbox/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/Team-Neptune/DeepSea-Toolbox/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/Team-Neptune/DeepSea-Toolbox/releases/latest
+cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo DeepSeaToolbox {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*DeepSeaToolbox.nro"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o DeepSeaToolbox.nro
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*DeepSeaToolbox.nro' \
+  | xargs -I {} curl -fsSL {} -o DeepSeaToolbox.nro
 if [ $? -ne 0 ]; then
     echo "DeepSeaToolbox download\033[31m failed\033[0m."
 else
@@ -308,14 +298,13 @@ else
 fi
 
 ### Fetch lastest NX-Activity-Log from https://github.com/zdm65477730/NX-Activity-Log/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/zdm65477730/NX-Activity-Log/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/zdm65477730/NX-Activity-Log/releases/latest
+cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo NX-Activity-Log {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*NX-Activity-Log.nro"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o NX-Activity-Log.nro
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*NX-Activity-Log.nro' \
+  | xargs -I {} curl -fsSL {} -o NX-Activity-Log.nro
 if [ $? -ne 0 ]; then
     echo "NX-Activity-Log download\033[31m failed\033[0m."
 else
@@ -325,14 +314,13 @@ else
 fi
 
 ### Fetch lastest NXThemesInstaller from https://github.com/exelix11/SwitchThemeInjector/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/exelix11/SwitchThemeInjector/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/exelix11/SwitchThemeInjector/releases/latest
+cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo NXThemesInstaller {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*NXThemesInstaller.nro"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o NXThemesInstaller.nro
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*NXThemesInstaller.nro' \
+  | xargs -I {} curl -fsSL {} -o NXThemesInstaller.nro
 if [ $? -ne 0 ]; then
     echo "NXThemesInstaller download\033[31m failed\033[0m."
 else
@@ -342,14 +330,13 @@ else
 fi
 
 ### Fetch lastest JKSV from https://github.com/J-D-K/JKSV/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/J-D-K/JKSV/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/J-D-K/JKSV/releases/latest
+cat $API_FILE \
   | jq '.name' \
   | xargs -I {} echo JKSV {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*JKSV.nro"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o JKSV.nro
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*JKSV.nro' \
+  | xargs -I {} curl -fsSL {} -o JKSV.nro
 if [ $? -ne 0 ]; then
     echo "JKSV download\033[31m failed\033[0m."
 else
@@ -370,14 +357,13 @@ cat > ./config/JKSV/webdav.json << ENDOFFILE
 ENDOFFILE
 
 ### Fetch lastest tencent-switcher-gui from https://github.com/CaiMiao/Tencent-switcher-GUI/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/CaiMiao/Tencent-switcher-GUI/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/CaiMiao/Tencent-switcher-GUI/releases/latest
+cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo tencent-switcher-gui {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*tencent-switcher-gui.nro"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o tencent-switcher-gui.nro
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*tencent-switcher-gui.nro' \
+  | xargs -I {} curl -fsSL {} -o tencent-switcher-gui.nro
 if [ $? -ne 0 ]; then
     echo "tencent-switcher-gui download\033[31m failed\033[0m."
 else
@@ -387,14 +373,13 @@ else
 fi
 
 ### Fetch lastest aio-switch-updater from https://github.com/HamletDuFromage/aio-switch-updater/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/HamletDuFromage/aio-switch-updater/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/HamletDuFromage/aio-switch-updater/releases/latest
+cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo aio-switch-updater {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*aio-switch-updater.zip"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o aio-switch-updater.zip
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*aio-switch-updater.zip' \
+  | xargs -I {} curl -fsSL {} -o aio-switch-updater.zip
 if [ $? -ne 0 ]; then
     echo "aio-switch-updater download\033[31m failed\033[0m."
 else
@@ -404,14 +389,13 @@ else
 fi
 
 ### Fetch lastest wiliwili from https://github.com/xfangfang/wiliwili/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/xfangfang/wiliwili/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/xfangfang/wiliwili/releases/latest
+cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo wiliwili {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*wiliwili-NintendoSwitch.zip"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o wiliwili-NintendoSwitch.zip
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*wiliwili-NintendoSwitch.zip' \
+  | xargs -I {} curl -fsSL {} -o wiliwili-NintendoSwitch.zip
 if [ $? -ne 0 ]; then
     echo "wiliwili download\033[31m failed\033[0m."
 else
@@ -424,14 +408,13 @@ else
 fi
 
 ### Fetch lastest SimpleModDownloader from https://github.com/PoloNX/SimpleModDownloader/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/PoloNX/SimpleModDownloader/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/PoloNX/SimpleModDownloader/releases/latest
+cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo SimpleModDownloader {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*SimpleModDownloader.nro"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o SimpleModDownloader.nro
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*SimpleModDownloader.nro' \
+  | xargs -I {} curl -fsSL {} -o SimpleModDownloader.nro
 if [ $? -ne 0 ]; then
     echo "SimpleModDownloader download\033[31m failed\033[0m."
 else
@@ -441,14 +424,13 @@ else
 fi
 
 ### Fetch lastest SimpleModManager from https://github.com/nadrino/SimpleModManager/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/nadrino/SimpleModManager/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/nadrino/SimpleModManager/releases/latest
+cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo SimpleModManager {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*SimpleModManager.nro"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o SimpleModManager.nro
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*SimpleModManager.nro' \
+  | xargs -I {} curl -fsSL {} -o SimpleModManager.nro
 if [ $? -ne 0 ]; then
     echo "SimpleModManager download\033[31m failed\033[0m."
 else
@@ -459,14 +441,13 @@ else
 fi
 
 ### Fetch lastest Switchfin from https://github.com/dragonflylee/switchfin/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/dragonflylee/switchfin/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/dragonflylee/switchfin/releases/latest
+cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo Switchfin {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*Switchfin.nro"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o Switchfin.nro
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*Switchfin.nro' \
+  | xargs -I {} curl -fsSL {} -o Switchfin.nro
 if [ $? -ne 0 ]; then
     echo "Switchfin download\033[31m failed\033[0m."
 else
@@ -476,14 +457,13 @@ else
 fi
 
 ### Fetch lastest Moonlight from https://github.com/XITRIX/Moonlight-Switch/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/XITRIX/Moonlight-Switch/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/XITRIX/Moonlight-Switch/releases/latest
+cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo Moonlight {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*Moonlight-Switch.nro"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o Moonlight-Switch.nro
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*Moonlight-Switch.nro' \
+  | xargs -I {} curl -fsSL {} -o Moonlight-Switch.nro
 if [ $? -ne 0 ]; then
     echo "Moonlight download\033[31m failed\033[0m."
 else
@@ -493,14 +473,13 @@ else
 fi
 
 ### Fetch NX-Shell from https://github.com/zdm65477730/NX-Shell/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/zdm65477730/NX-Shell/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/zdm65477730/NX-Shell/releases/latest
+cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo NX-Shell {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*NX-Shell.nro"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o NX-Shell.nro
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*NX-Shell.nro' \
+  | xargs -I {} curl -fsSL {} -o NX-Shell.nro
 if [ $? -ne 0 ]; then
     echo "NX-Shell download\033[31m failed\033[0m."
 else
@@ -510,14 +489,13 @@ else
 fi
 
 ### Fetch lastest hb-appstore from https://github.com/fortheusers/hb-appstore/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/fortheusers/hb-appstore/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/fortheusers/hb-appstore/releases/latest
+cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo hb-appstore {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*appstore.nro"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o appstore.nro
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*appstore.nro' \
+  | xargs -I {} curl -fsSL {} -o appstore.nro
 if [ $? -ne 0 ]; then
     echo "appstore download\033[31m failed\033[0m."
 else
@@ -527,14 +505,13 @@ else
 fi
 
 ### Fetch lastest ReverseNX-Tool from https://github.com/masagrator/ReverseNX-Tool/releases
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/masagrator/ReverseNX-Tool/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/masagrator/ReverseNX-Tool/releases/latest
+cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo ReverseNX-Tool {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*ReverseNX-Tool.nro"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o ReverseNX-Tool.nro
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*ReverseNX-Tool.nro' \
+  | xargs -I {} curl -fsSL {} -o ReverseNX-Tool.nro
 if [ $? -ne 0 ]; then
     echo "ReverseNX-Tool download\033[31m failed\033[0m."
 else
@@ -544,14 +521,13 @@ else
 fi
 
 ### Fetch lastest Goldleaf from https://github.com/XorTroll/Goldleaf/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/XorTroll/Goldleaf/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/XorTroll/Goldleaf/releases/latest
+cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo Goldleaf {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*Goldleaf.nro"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o Goldleaf.nro
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*Goldleaf.nro' \
+  | xargs -I {} curl -fsSL {} -o Goldleaf.nro
 if [ $? -ne 0 ]; then
     echo "Goldleaf download\033[31m failed\033[0m."
 else
@@ -561,14 +537,13 @@ else
 fi
 
 ### Fetch lastest Safe_Reboot_Shutdown from https://github.com/dezem/Safe_Reboot_Shutdown/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/dezem/Safe_Reboot_Shutdown/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/dezem/Safe_Reboot_Shutdown/releases/latest
+cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo Safe_Reboot_Shutdown {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*Safe_Reboot_Shutdown.zip"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o Safe_Reboot_Shutdown.zip
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*Safe_Reboot_Shutdown.zip' \
+  | xargs -I {} curl -fsSL {} -o Safe_Reboot_Shutdown.zip
 if [ $? -ne 0 ]; then
     echo "Safe_Reboot_Shutdown download\033[31m failed\033[0m."
 else
@@ -596,14 +571,13 @@ fi
 #fi
 
 ### Fetch lastest Firmware-Dumper【Chinese lang】 from https://github.com/zdm65477730/Switch-Firmware-Dumper/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/zdm65477730/Switch-Firmware-Dumper/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/zdm65477730/Switch-Firmware-Dumper/releases/latest
+cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo Firmware-Dumper {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*Firmware-Dumper.zip"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o Firmware-Dumper.zip
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*Firmware-Dumper.zip' \
+  | xargs -I {} curl -fsSL {} -o Firmware-Dumper.zip
 if [ $? -ne 0 ]; then
     echo "Firmware-Dumper download\033[31m failed\033[0m."
 else
@@ -613,7 +587,7 @@ else
 fi
 
 ### Fetch lastest nxdumptool(nxdt_rw_poc) from https://github.com/DarkMatterCore/nxdumptool/releases/download/rewrite-prerelease/nxdt_rw_poc.nro
-curl -sL https://github.com/DarkMatterCore/nxdumptool/releases/download/rewrite-prerelease/nxdt_rw_poc.nro -o nxdt_rw_poc.nro
+curl -fsSL https://github.com/DarkMatterCore/nxdumptool/releases/download/rewrite-prerelease/nxdt_rw_poc.nro -o nxdt_rw_poc.nro
 if [ $? -ne 0 ]; then
     echo "nxdt_rw_poc download\033[31m failed\033[0m."
 else
@@ -624,14 +598,13 @@ else
 fi
 
 ### Fetch lastest Haku33 from https://github.com/StarDustCFW/Haku33/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/StarDustCFW/Haku33/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/StarDustCFW/Haku33/releases/latest
+cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo Haku33 {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*Haku33.nro"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o Haku33.nro
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*Haku33.nro' \
+  | xargs -I {} curl -fsSL {} -o Haku33.nro
 if [ $? -ne 0 ]; then
     echo "Haku33 download\033[31m failed\033[0m."
 else
@@ -641,7 +614,7 @@ else
 fi
 
 ### Fetch linkalho
-curl -sL https://raw.githubusercontent.com/gzk47/SwitchPlugins/main/nro/linkalho.zip -o linkalho.zip
+curl -fsSL https://raw.githubusercontent.com/gzk47/SwitchPlugins/main/nro/linkalho.zip -o linkalho.zip
 if [ $? -ne 0 ]; then
     echo "linkalho download\033[31m failed\033[0m."
 else
@@ -652,14 +625,13 @@ else
 fi
 
 ### Fetch lastest sphaira from https://github.com/ITotalJustice/sphaira/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/ITotalJustice/sphaira/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/ITotalJustice/sphaira/releases/latest
+cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo sphaira {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*sphaira[^"]*.zip"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o sphaira.zip
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*sphaira[^"]*.zip' \
+  | xargs -I {} curl -fsSL {} -o sphaira.zip
 if [ $? -ne 0 ]; then
     echo "sphaira download\033[31m failed\033[0m."
 else
@@ -681,14 +653,13 @@ install_emummc=1
 ENDOFFILE
 
 ### Fetch lastest Checkpoint from https://github.com/BernardoGiordano/Checkpoint/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/BernardoGiordano/Checkpoint/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/BernardoGiordano/Checkpoint/releases/latest
+cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo Checkpoint {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*Checkpoint.nro"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o Checkpoint.nro
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*Checkpoint.nro' \
+  | xargs -I {} curl -fsSL {} -o Checkpoint.nro
 if [ $? -ne 0 ]; then
     echo "Checkpoint download\033[31m failed\033[0m."
 else
@@ -720,14 +691,13 @@ ENDOFFILE
 #fi
 
 ## Fetch lastest nx-ovlloader from https://github.com/zdm65477730/nx-ovlloader/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/zdm65477730/nx-ovlloader/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/zdm65477730/nx-ovlloader/releases/latest
+cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo nx-ovlloader {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*nx-ovlloader[^"]*.zip"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o nx-ovlloader.zip
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*nx-ovlloader[^"]*.zip' \
+  | xargs -I {} curl -fsSL {} -o nx-ovlloader.zip
 if [ $? -ne 0 ]; then
     echo "nx-ovlloader download\033[31m failed\033[0m."
 else
@@ -790,14 +760,13 @@ fi
 
 ### Fetch Ultrahand-Overlay
 ## Fetch latest Ultrahand-Overlay from https://github.com/zdm65477730/Ultrahand-Overlay
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/zdm65477730/Ultrahand-Overlay/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/zdm65477730/Ultrahand-Overlay/releases/latest
+cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo Ultrahand-Overlay {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*Ultrahand[^"]*.zip"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o Ultrahand.zip
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*Ultrahand[^"]*.zip' \
+  | xargs -I {} curl -fsSL {} -o Ultrahand.zip
 if [ $? -ne 0 ]; then
     echo "Ultrahand-Overlay download\033[31m failed\033[0m."
 else
@@ -873,14 +842,13 @@ mv ./config/Ultrahand ./config/ultrahand
 #fi
 
 ## Fetch lastest ovl-sysmodules from https://github.com/zdm65477730/ovl-sysmodules/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/zdm65477730/ovl-sysmodules/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/zdm65477730/ovl-sysmodules/releases/latest
+cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo ovl-sysmodules {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*ovl-sysmodules[^"]*.zip"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o ovl-sysmodules.zip
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*ovl-sysmodules[^"]*.zip' \
+  | xargs -I {} curl -fsSL {} -o ovl-sysmodules.zip
 if [ $? -ne 0 ]; then
     echo "ovl-sysmodules download\033[31m failed\033[0m."
 else
@@ -911,15 +879,14 @@ ENDOFFILE
 #fi
 
 ## Fetch lastest Status-Monitor-Overlay from https://github.com/zdm65477730/Status-Monitor-Overlay/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/zdm65477730/Status-Monitor-Overlay/releases
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/zdm65477730/Status-Monitor-Overlay/releases
+cat $API_FILE \
   | jq 'first(.[]|select(.assets|any(.name|test("^StatusMonitor.*\\.zip$")))).tag_name' \
   | xargs -I {} echo StatusMonitor {} >> ../description.txt
-cat latest.json \
+cat $API_FILE \
   | jq 'first(.[]|select(.assets|any(.name|test("^StatusMonitor.*\\.zip$"))))' \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*StatusMonitor[^"]*.zip"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o StatusMonitor.zip
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*StatusMonitor[^"]*.zip' \
+  | xargs -I {} curl -fsSL {} -o StatusMonitor.zip
 if [ $? -ne 0 ]; then
     echo "StatusMonitor download\033[31m failed\033[0m."
 else
@@ -939,14 +906,13 @@ fi
 #fi
 
 ## Fetch lastest EdiZon-Overlay from https://github.com/zdm65477730/EdiZon-Overlay/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/zdm65477730/EdiZon-Overlay/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/zdm65477730/EdiZon-Overlay/releases/latest
+cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo EdiZon {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*EdiZon[^"]*.zip"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o EdiZon.zip
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*EdiZon[^"]*.zip' \
+  | xargs -I {} curl -fsSL {} -o EdiZon.zip
 if [ $? -ne 0 ]; then
     echo "EdiZon download\033[31m failed\033[0m."
 else
@@ -967,14 +933,13 @@ fi
 #fi
 
 ## Fetch lastest ReverseNX-RT from https://github.com/zdm65477730/ReverseNX-RT/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/zdm65477730/ReverseNX-RT/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/zdm65477730/ReverseNX-RT/releases/latest
+cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo ReverseNX-RT {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*ReverseNX-RT[^"]*.zip"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o ReverseNX-RT.zip
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*ReverseNX-RT[^"]*.zip' \
+  | xargs -I {} curl -fsSL {} -o ReverseNX-RT.zip
 if [ $? -ne 0 ]; then
     echo "ReverseNX-RT download\033[31m failed\033[0m."
 else
@@ -1006,14 +971,13 @@ fi
 #fi
 
 ## Fetch lastest sys-clk from https://github.com/zdm65477730/sys-clk/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/zdm65477730/sys-clk/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/zdm65477730/sys-clk/releases/latest
+cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo sys-clk {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*sys-clk[^"]*.zip"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o sys-clk.zip
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*sys-clk[^"]*.zip' \
+  | xargs -I {} curl -fsSL {} -o sys-clk.zip
 if [ $? -ne 0 ]; then
     echo "sys-clk download\033[31m failed\033[0m."
 else
@@ -1033,14 +997,13 @@ fi
 #fi
 
 ## Fetch lastest emuiibo from https://github.com/zdm65477730/emuiibo/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/zdm65477730/emuiibo/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/zdm65477730/emuiibo/releases/latest
+cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo emuiibo {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*emuiibo[^"]*.zip"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o emuiibo.zip
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*emuiibo[^"]*.zip' \
+  | xargs -I {} curl -fsSL {} -o emuiibo.zip
 if [ $? -ne 0 ]; then
     echo "emuiibo download\033[31m failed\033[0m."
 else
@@ -1060,14 +1023,13 @@ fi
 #fi
 
 ## Fetch lastest ldn_mitm from https://github.com/zdm65477730/ldn_mitm/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/zdm65477730/ldn_mitm/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/zdm65477730/ldn_mitm/releases/latest
+cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo ldn_mitm {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*ldn_mitm[^"]*.zip"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o ldn_mitm.zip
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*ldn_mitm[^"]*.zip' \
+  | xargs -I {} curl -fsSL {} -o ldn_mitm.zip
 if [ $? -ne 0 ]; then
     echo "ldn_mitm download\033[31m failed\033[0m."
 else
@@ -1087,14 +1049,13 @@ fi
 #fi
 
 ## Fetch lastest QuickNTP from https://github.com/zdm65477730/QuickNTP/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/zdm65477730/QuickNTP/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/zdm65477730/QuickNTP/releases/latest
+cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo QuickNTP {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*QuickNTP[^"]*.zip"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o QuickNTP.zip
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*QuickNTP[^"]*.zip' \
+  | xargs -I {} curl -fsSL {} -o QuickNTP.zip
 if [ $? -ne 0 ]; then
     echo "QuickNTP download\033[31m failed\033[0m."
 else
@@ -1114,14 +1075,13 @@ fi
 #fi
 
 ## Fetch lastest sysdvr-overlay from https://github.com/zdm65477730/sysdvr-overlay/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/zdm65477730/sysdvr-overlay/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/zdm65477730/sysdvr-overlay/releases/latest
+cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo SysDVR {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*SysDVR[^"]*.zip"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o SysDVR.zip
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*SysDVR[^"]*.zip' \
+  | xargs -I {} curl -fsSL {} -o SysDVR.zip
 if [ $? -ne 0 ]; then
     echo "SysDVR download\033[31m failed\033[0m."
 else
@@ -1179,14 +1139,13 @@ fi
 ###
 
 ### Fetch MissionControl from https://github.com//ndeadly/MissionControl/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/ndeadly/MissionControl/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/ndeadly/MissionControl/releases/latest
+cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo MissionControl {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*MissionControl[^"]*.zip"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o MissionControl.zip
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*MissionControl[^"]*.zip' \
+  | xargs -I {} curl -fsSL {} -o MissionControl.zip
 if [ $? -ne 0 ]; then
     echo "MissionControl download\033[31m failed\033[0m."
 else
@@ -1196,14 +1155,13 @@ else
 fi
 
 ## Fetch lastest sys-con from https://github.com/o0Zz/sys-con/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/o0Zz/sys-con/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/o0Zz/sys-con/releases/latest
+cat $API_FILE \
   | jq '.name' \
   | xargs -I {} echo sys-con {} >> ../description.txt
-cat latest.json \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*sys-con[^"]*.zip"' \
-  | sed 's/"//g' \
-  | xargs -I {} curl -sL {} -o sys-con.zip
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*sys-con[^"]*.zip' \
+  | xargs -I {} curl -fsSL {} -o sys-con.zip
 if [ $? -ne 0 ]; then
     echo "sys-con download\033[31m failed\033[0m."
 else
@@ -1225,8 +1183,8 @@ ENDOFFILE
 ###
 
 ### Fetch latest EOS-OC-Suite sys-clk.zip from https://github.com/halop/OC_Toolkit_SC_EOS/releases/latest
-curl -H "$API_AUTH" -o latest.json -sL https://api.github.com/repos/halop/OC_Toolkit_SC_EOS/releases/latest
-cat latest.json \
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/halop/OC_Toolkit_SC_EOS/releases/latest
+cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo EOS{}-OC-Suite >> ../description.txt
 
@@ -1514,7 +1472,7 @@ rm -f switch/haze.nro
 rm -f switch/reboot_to_hekate.nro
 rm -f switch/reboot_to_payload.nro
 rm -rf mods
-rm -f latest.json
+rm -f $API_FILE
 
 ### Delete boot2 files
 rm -f atmosphere/contents/00FF0000A53BB665/flags/*.*
@@ -1537,7 +1495,7 @@ rm -f atmosphere/contents/4200000000000010/flags/*.*
 # -------------------------------------------
 
 ### Fetch logo
-curl -sL https://raw.githubusercontent.com/gzk47/SwitchPlugins/main/sys/logo.zip -o logo.zip
+curl -fsSL https://raw.githubusercontent.com/gzk47/SwitchPlugins/main/sys/logo.zip -o logo.zip
 if [ $? -ne 0 ]; then
     echo "logo download\033[31m failed\*3[0m."
 else
@@ -1547,7 +1505,7 @@ else
 fi
 
 ### Fetch boot-dat
-curl -sL https://raw.githubusercontent.com/gzk47/SwitchPlugins/main/sys/boot-dat.zip -o boot-dat.zip
+curl -fsSL https://raw.githubusercontent.com/gzk47/SwitchPlugins/main/sys/boot-dat.zip -o boot-dat.zip
 if [ $? -ne 0 ]; then
     echo "boot-dat download\033[31m failed\033[0m."
 else
@@ -1557,7 +1515,7 @@ else
 fi
 
 ### Fetch readme
-curl -sL https://raw.githubusercontent.com/gzk47/SwitchPlugins/main/sys/readme.txt -o readme.txt
+curl -fsSL https://raw.githubusercontent.com/gzk47/SwitchPlugins/main/sys/readme.txt -o readme.txt
 if [ $? -ne 0 ]; then
     echo "readme download\033[31m failed\033[0m."
 else
