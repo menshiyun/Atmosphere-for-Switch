@@ -93,19 +93,13 @@ fi
 #    rm sigpatches.zip
 #fi
 
-###
-cat >> ../description.txt << ENDOFFILE
-sigpatches
-ENDOFFILE
-###
-
 ### Fetch sys-patch from https://github.com/impeeza/sys-patch/releases/latest
 curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/impeeza/sys-patch/releases/latest
 cat $API_FILE \
   | jq '.name' \
   | xargs -I {} echo {} >> ../description.txt
 cat $API_FILE \
-  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*sys-patch.zip' \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*sys-patch.*\.zip' \
   | xargs -I {} curl -fsSL {} -o sys-patch.zip
 if [ $? -ne 0 ]; then
     echo "sys-patch download\033[31m failed\033[0m."
@@ -249,13 +243,13 @@ else
     mv Switch_90DNS_tester.nro ./switch/Switch_90DNS_tester
 fi
 
-### Fetch lastest DBI from https://github.com/rashevskyv/dbi/releases/latest
-curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/rashevskyv/dbi/releases/latest
+### Fetch lastest DBI from https://github.com/menshiyun/dbi/releases/latest
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/menshiyun/dbi/releases/latest
 cat $API_FILE \
   | jq '.name' \
   | xargs -I {} echo {} >> ../description.txt
 cat $API_FILE \
-  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*DBI.nro' \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*DBI\.chs\.nro' \
   | xargs -I {} curl -fsSL {} -o DBI.nro
 if [ $? -ne 0 ]; then
     echo "DBI download\033[31m failed\033[0m."
@@ -345,17 +339,6 @@ else
     mv JKSV.nro ./switch/JKSV
 fi
 
-### Write webdav.json in /config/JKSV/webdav.json
-mkdir -p ./config/JKSV
-cat > ./config/JKSV/webdav.json << ENDOFFILE
-{
-  "origin": "示例：https://dav.jianguoyun.com",
-  "basepath": "示例：dav/switch",
-  "username": "示例：gzk_47@qq.com",
-  "password": "示例：agc6yix8mvvjs8xz47"
-}
-ENDOFFILE
-
 ### Fetch lastest tencent-switcher-gui from https://github.com/CaiMiao/Tencent-switcher-GUI/releases/latest
 curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/CaiMiao/Tencent-switcher-GUI/releases/latest
 cat $API_FILE \
@@ -386,25 +369,6 @@ else
     echo "aio-switch-updater download\033[32m success\033[0m."
     unzip -oq aio-switch-updater.zip
     rm aio-switch-updater.zip
-fi
-
-### Fetch lastest wiliwili from https://github.com/xfangfang/wiliwili/releases/latest
-curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/xfangfang/wiliwili/releases/latest
-cat $API_FILE \
-  | jq '.tag_name' \
-  | xargs -I {} echo wiliwili {} >> ../description.txt
-cat $API_FILE \
-  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*wiliwili-NintendoSwitch.zip' \
-  | xargs -I {} curl -fsSL {} -o wiliwili-NintendoSwitch.zip
-if [ $? -ne 0 ]; then
-    echo "wiliwili download\033[31m failed\033[0m."
-else
-    echo "wiliwili download\033[32m success\033[0m."
-    unzip -oq wiliwili-NintendoSwitch.zip
-    mkdir -p ./switch/wiliwili
-    mv wiliwili/wiliwili.nro ./switch/wiliwili
-    rm -rf wiliwili
-    rm wiliwili-NintendoSwitch.zip
 fi
 
 ### Fetch lastest SimpleModDownloader from https://github.com/PoloNX/SimpleModDownloader/releases/latest
@@ -440,38 +404,6 @@ else
     mv SimpleModManager.nro ./switch/SimpleModManager
 fi
 
-### Fetch lastest Switchfin from https://github.com/dragonflylee/switchfin/releases/latest
-curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/dragonflylee/switchfin/releases/latest
-cat $API_FILE \
-  | jq '.tag_name' \
-  | xargs -I {} echo Switchfin {} >> ../description.txt
-cat $API_FILE \
-  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*Switchfin.nro' \
-  | xargs -I {} curl -fsSL {} -o Switchfin.nro
-if [ $? -ne 0 ]; then
-    echo "Switchfin download\033[31m failed\033[0m."
-else
-    echo "Switchfin download\033[32m success\033[0m."
-    mkdir -p ./switch/Switchfin
-    mv Switchfin.nro ./switch/Switchfin
-fi
-
-### Fetch lastest Moonlight from https://github.com/XITRIX/Moonlight-Switch/releases/latest
-curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/XITRIX/Moonlight-Switch/releases/latest
-cat $API_FILE \
-  | jq '.tag_name' \
-  | xargs -I {} echo Moonlight {} >> ../description.txt
-cat $API_FILE \
-  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*Moonlight-Switch.nro' \
-  | xargs -I {} curl -fsSL {} -o Moonlight-Switch.nro
-if [ $? -ne 0 ]; then
-    echo "Moonlight download\033[31m failed\033[0m."
-else
-    echo "Moonlight download\033[32m success\033[0m."
-    mkdir -p ./switch/Moonlight-Switch
-    mv Moonlight-Switch.nro ./switch/Moonlight-Switch
-fi
-
 ### Fetch NX-Shell from https://github.com/zdm65477730/NX-Shell/releases/latest
 curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/zdm65477730/NX-Shell/releases/latest
 cat $API_FILE \
@@ -502,22 +434,6 @@ else
     echo "appstore download\033[32m success\033[0m."
     mkdir -p ./switch/appstore
     mv appstore.nro ./switch/appstore
-fi
-
-### Fetch lastest ReverseNX-Tool from https://github.com/masagrator/ReverseNX-Tool/releases
-curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/masagrator/ReverseNX-Tool/releases/latest
-cat $API_FILE \
-  | jq '.tag_name' \
-  | xargs -I {} echo ReverseNX-Tool {} >> ../description.txt
-cat $API_FILE \
-  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*ReverseNX-Tool.nro' \
-  | xargs -I {} curl -fsSL {} -o ReverseNX-Tool.nro
-if [ $? -ne 0 ]; then
-    echo "ReverseNX-Tool download\033[31m failed\033[0m."
-else
-    echo "ReverseNX-Tool download\033[32m success\033[0m."
-    mkdir -p ./switch/ReverseNX-Tool
-    mv ReverseNX-Tool.nro ./switch/ReverseNX-Tool
 fi
 
 ### Fetch lastest Goldleaf from https://github.com/XorTroll/Goldleaf/releases/latest
@@ -614,7 +530,7 @@ else
 fi
 
 ### Fetch linkalho
-curl -fsSL https://raw.githubusercontent.com/gzk47/SwitchPlugins/main/nro/linkalho.zip -o linkalho.zip
+curl -fsSL https://raw.githubusercontent.com/menshiyun/SwitchPlugins/main/nro/linkalho.zip -o linkalho.zip
 if [ $? -ne 0 ]; then
     echo "linkalho download\033[31m failed\033[0m."
 else
@@ -623,34 +539,6 @@ else
     unzip -oq linkalho.zip
     rm linkalho.zip
 fi
-
-### Fetch lastest sphaira from https://github.com/ITotalJustice/sphaira/releases/latest
-curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/ITotalJustice/sphaira/releases/latest
-cat $API_FILE \
-  | jq '.tag_name' \
-  | xargs -I {} echo sphaira {} >> ../description.txt
-cat $API_FILE \
-  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*sphaira[^"]*.zip' \
-  | xargs -I {} curl -fsSL {} -o sphaira.zip
-if [ $? -ne 0 ]; then
-    echo "sphaira download\033[31m failed\033[0m."
-else
-    echo "sphaira download\033[32m success\033[0m."
-    unzip -oq sphaira.zip
-    rm sphaira.zip
-fi
-
-### Write config.ini in /config/sphaira/config.ini
-mkdir -p ./config/sphaira
-cat > ./config/sphaira/config.ini << ENDOFFILE
-[paths]
-last_path=/
-[config]
-theme=romfs:/themes/white_theme.ini
-language=7
-replace_hbmenu=0
-install_emummc=1
-ENDOFFILE
 
 ### Fetch lastest Checkpoint from https://github.com/BernardoGiordano/Checkpoint/releases/latest
 curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/BernardoGiordano/Checkpoint/releases/latest
@@ -760,7 +648,7 @@ fi
 
 ### Fetch Ultrahand-Overlay
 ## Fetch latest Ultrahand-Overlay from https://github.com/zdm65477730/Ultrahand-Overlay
-curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/zdm65477730/Ultrahand-Overlay/releases/latest
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/zdm65477730/Ultrahand-Overlay/releases/tags/2.0.1
 cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo Ultrahand-Overlay {} >> ../description.txt
@@ -1172,24 +1060,6 @@ fi
 
 # -------------------------------------------
 
-###
-cat >> ../description.txt << ENDOFFILE
- 
-------------------------------
- 
-极限超频替换包：（ 覆盖到【特斯拉版】心悦整合包上替换 ）
- 
-ENDOFFILE
-###
-
-### Fetch latest EOS-OC-Suite sys-clk.zip from https://github.com/halop/OC_Toolkit_SC_EOS/releases/latest
-curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/halop/OC_Toolkit_SC_EOS/releases/latest
-cat $API_FILE \
-  | jq '.tag_name' \
-  | xargs -I {} echo EOS{}-OC-Suite >> ../description.txt
-
-# -------------------------------------------
-
 ### Rename hekate_ctcaer_*.bin to payload.bin
 find . -name "*hekate_ctcaer*" -exec mv {} payload.bin \;
 if [ $? -ne 0 ]; then
@@ -1495,7 +1365,7 @@ rm -f atmosphere/contents/4200000000000010/flags/*.*
 # -------------------------------------------
 
 ### Fetch logo
-curl -fsSL https://raw.githubusercontent.com/gzk47/SwitchPlugins/main/sys/logo.zip -o logo.zip
+curl -fsSL https://raw.githubusercontent.com/menshiyun/SwitchPlugins/main/sys/logo.zip -o logo.zip
 if [ $? -ne 0 ]; then
     echo "logo download\033[31m failed\*3[0m."
 else
@@ -1505,7 +1375,7 @@ else
 fi
 
 ### Fetch boot-dat
-curl -fsSL https://raw.githubusercontent.com/gzk47/SwitchPlugins/main/sys/boot-dat.zip -o boot-dat.zip
+curl -fsSL https://raw.githubusercontent.com/menshiyun/SwitchPlugins/main/sys/boot-dat.zip -o boot-dat.zip
 if [ $? -ne 0 ]; then
     echo "boot-dat download\033[31m failed\033[0m."
 else
@@ -1515,7 +1385,7 @@ else
 fi
 
 ### Fetch readme
-curl -fsSL https://raw.githubusercontent.com/gzk47/SwitchPlugins/main/sys/readme.txt -o readme.txt
+curl -fsSL https://raw.githubusercontent.com/menshiyun/SwitchPlugins/main/sys/readme.txt -o readme.txt
 if [ $? -ne 0 ]; then
     echo "readme download\033[31m failed\033[0m."
 else
@@ -1542,10 +1412,7 @@ cat >> ../description.txt << ENDOFFILE
  
 ------------------------------
  
-SwitchSD-Pure  为：纯净版
-SwitchSD-Tesla 为：特斯拉版
 SwitchSD       为：特斯拉版+sys-patch
-EOS-OC-Suite   为：极限超频替换包
  
 ENDOFFILE
 ###
