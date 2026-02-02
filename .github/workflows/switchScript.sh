@@ -33,6 +33,8 @@ cd SwitchSD
 # -------------------------------------------
 
 cat >> ../description.txt << ENDOFFILE
+## 心悦大气层中文整合包 v$(date +%Y%m%d)
+
 大气层核心套件：
  
 ENDOFFILE
@@ -227,8 +229,8 @@ cat >> ../description.txt << ENDOFFILE
 ENDOFFILE
 ###
 
-### Fetch lastest Switch_90DNS_tester from https://github.com/meganukebmp/Switch_90DNS_tester/releases/latest
-curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/meganukebmp/Switch_90DNS_tester/releases/latest
+### Fetch lastest Switch_90DNS_tester from https://github.com/gzk47/Switch_90DNS_tester/releases/latest
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/gzk47/Switch_90DNS_tester/releases/latest
 cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo Switch_90DNS_tester {} >> ../description.txt
@@ -259,8 +261,8 @@ else
     mv DBI.nro ./switch/DBI
 fi
 
-### Fetch lastest Awoo Installer from https://github.com/dragonflylee/Awoo-Installer/releases/latest
-curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/dragonflylee/Awoo-Installer/releases/latest
+### Fetch lastest Awoo Installer from https://github.com/Huntereb/Awoo-Installer/releases/latest
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/Huntereb/Awoo-Installer/releases/latest
 cat $API_FILE \
   | jq '.name' \
   | xargs -I {} echo {} >> ../description.txt
@@ -275,20 +277,20 @@ else
     rm Awoo-Installer.zip
 fi
 
-### Fetch lastest DeepSeaToolbox from https://github.com/Team-Neptune/DeepSea-Toolbox/releases/latest
-curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/Team-Neptune/DeepSea-Toolbox/releases/latest
+### Fetch lastest HekateToolbox from https://github.com/gzk47/Hekate-Toolbox/releases/latest
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/gzk47/Hekate-Toolbox/releases/latest
 cat $API_FILE \
   | jq '.tag_name' \
-  | xargs -I {} echo DeepSeaToolbox {} >> ../description.txt
+  | xargs -I {} echo HekateToolbox {} >> ../description.txt
 cat $API_FILE \
-  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*DeepSeaToolbox.nro' \
-  | xargs -I {} curl -fsSL {} -o DeepSeaToolbox.nro
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*HekateToolbox.nro' \
+  | xargs -I {} curl -fsSL {} -o HekateToolbox.nro
 if [ $? -ne 0 ]; then
-    echo "DeepSeaToolbox download\033[31m failed\033[0m."
+    echo "HekateToolbox download\033[31m failed\033[0m."
 else
-    echo "DeepSeaToolbox download\033[32m success\033[0m."
-    mkdir -p ./switch/DeepSea-Toolbox
-    mv DeepSeaToolbox.nro ./switch/DeepSea-Toolbox
+    echo "HekateToolbox download\033[32m success\033[0m."
+    mkdir -p ./switch/HekateToolbox
+    mv HekateToolbox.nro ./switch/HekateToolbox
 fi
 
 ### Fetch lastest NX-Activity-Log from https://github.com/zdm65477730/NX-Activity-Log/releases/latest
@@ -339,8 +341,8 @@ else
     mv JKSV.nro ./switch/JKSV
 fi
 
-### Fetch lastest tencent-switcher-gui from https://github.com/CaiMiao/Tencent-switcher-GUI/releases/latest
-curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/CaiMiao/Tencent-switcher-GUI/releases/latest
+### Fetch lastest tencent-switcher-gui from https://github.com/gzk47/Tencent-switcher-GUI/releases/latest
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/gzk47/Tencent-switcher-GUI/releases/latest
 cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo tencent-switcher-gui {} >> ../description.txt
@@ -387,8 +389,8 @@ else
     mv SimpleModDownloader.nro ./switch/SimpleModDownloader
 fi
 
-### Fetch lastest SimpleModManager from https://github.com/nadrino/SimpleModManager/releases/latest
-curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/nadrino/SimpleModManager/releases/latest
+### Fetch lastest SimpleModManager from https://github.com/DefenderOfHyrule/SimpleModManager/releases/latest
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/DefenderOfHyrule/SimpleModManager/releases/latest
 cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo SimpleModManager {} >> ../description.txt
@@ -420,13 +422,13 @@ else
     mv NX-Shell.nro ./switch/NX-Shell
 fi
 
-### Fetch lastest hb-appstore from https://github.com/fortheusers/hb-appstore/releases/latest
-curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/fortheusers/hb-appstore/releases/latest
+### Fetch lastest hb-appstore from https://github.com/gzk47/hb-appstore/releases/latest
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/gzk47/hb-appstore/releases/latest
 cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo hb-appstore {} >> ../description.txt
 cat $API_FILE \
-  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*appstore.nro' \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*appstore[^"]*.nro' \
   | xargs -I {} curl -fsSL {} -o appstore.nro
 if [ $? -ne 0 ]; then
     echo "appstore download\033[31m failed\033[0m."
@@ -452,20 +454,18 @@ else
     mv Goldleaf.nro ./switch/Goldleaf
 fi
 
-### Fetch lastest Safe_Reboot_Shutdown from https://github.com/dezem/Safe_Reboot_Shutdown/releases/latest
-curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/dezem/Safe_Reboot_Shutdown/releases/latest
+### Fetch lastest Safe_Reboot_Shutdown from https://github.com/gzk47/Safe_Reboot_Shutdown/releases/latest
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/gzk47/Safe_Reboot_Shutdown/releases/latest
 cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo Safe_Reboot_Shutdown {} >> ../description.txt
 cat $API_FILE \
-  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*Safe_Reboot_Shutdown.zip' \
-  | xargs -I {} curl -fsSL {} -o Safe_Reboot_Shutdown.zip
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*Safe_Reboot_Shutdown.nro' \
+  | xargs -I {} curl -fsSL {} -o Safe_Reboot_Shutdown.nro
 if [ $? -ne 0 ]; then
     echo "Safe_Reboot_Shutdown download\033[31m failed\033[0m."
 else
     echo "Safe_Reboot_Shutdown download\033[32m success\033[0m."
-    unzip -oq Safe_Reboot_Shutdown.zip
-    rm Safe_Reboot_Shutdown.zip
     mkdir -p ./switch/SafeReboot
     mv Safe_Reboot_Shutdown.nro ./switch/SafeReboot
 fi
@@ -485,22 +485,6 @@ fi
 #    mkdir -p ./switch/Firmware-Dumper
 #    mv Firmware-Dumper.nro ./switch/Firmware-Dumper
 #fi
-
-### Fetch lastest Firmware-Dumper【Chinese lang】 from https://github.com/zdm65477730/Switch-Firmware-Dumper/releases/latest
-curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/zdm65477730/Switch-Firmware-Dumper/releases/latest
-cat $API_FILE \
-  | jq '.tag_name' \
-  | xargs -I {} echo Firmware-Dumper {} >> ../description.txt
-cat $API_FILE \
-  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*Firmware-Dumper.zip' \
-  | xargs -I {} curl -fsSL {} -o Firmware-Dumper.zip
-if [ $? -ne 0 ]; then
-    echo "Firmware-Dumper download\033[31m failed\033[0m."
-else
-    echo "Firmware-Dumper download\033[32m success\033[0m."
-    unzip -oq Firmware-Dumper.zip
-    rm Firmware-Dumper.zip
-fi
 
 ### Fetch lastest nxdumptool(nxdt_rw_poc) from https://github.com/DarkMatterCore/nxdumptool/releases/download/rewrite-prerelease/nxdt_rw_poc.nro
 curl -fsSL https://github.com/DarkMatterCore/nxdumptool/releases/download/rewrite-prerelease/nxdt_rw_poc.nro -o nxdt_rw_poc.nro
@@ -529,15 +513,21 @@ else
     mv Haku33.nro ./switch/Haku33
 fi
 
-### Fetch linkalho
-curl -fsSL https://raw.githubusercontent.com/menshiyun/SwitchPlugins/main/nro/linkalho.zip -o linkalho.zip
+### Fetch lastest linkalho from https://github.com/gzk47/linkalho/releases/latest
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/gzk47/linkalho/releases/latest
+cat $API_FILE \
+  | jq '.tag_name' \
+  | xargs -I {} echo linkalho {} 中文 >> ../description.txt
+cat $API_FILE \
+  | grep -oP '"browser_download_url": "\Khttps://[^"]*linkalho.nro"' \
+  | sed 's/"//g' \
+  | xargs -I {} curl -sL {} -o linkalho.nro
 if [ $? -ne 0 ]; then
     echo "linkalho download\033[31m failed\033[0m."
 else
     echo "linkalho download\033[32m success\033[0m."
-    echo linkalho >> ../description.txt
-    unzip -oq linkalho.zip
-    rm linkalho.zip
+    mkdir -p ./switch/linkalho
+    mv linkalho.nro ./switch/linkalho
 fi
 
 ### Fetch lastest Checkpoint from https://github.com/BernardoGiordano/Checkpoint/releases/latest
@@ -648,7 +638,7 @@ fi
 
 ### Fetch Ultrahand-Overlay
 ## Fetch latest Ultrahand-Overlay from https://github.com/zdm65477730/Ultrahand-Overlay
-curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/zdm65477730/Ultrahand-Overlay/releases/tags/2.0.1
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/zdm65477730/Ultrahand-Overlay/releases/latest
 cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo Ultrahand-Overlay {} >> ../description.txt
@@ -843,8 +833,10 @@ if [ $? -ne 0 ]; then
     echo "FPSLocker-Warehouse download\033[31m failed\033[0m."
 else
     echo "FPSLocker-Warehouse download\033[32m success\033[0m."
-    rm -rf SaltySD/plugins/FPSLocker/patches
-    mv -f FPSLocker-Warehouse/SaltySD/plugins/FPSLocker/patches ./SaltySD/plugins/FPSLocker/
+    git -C FPSLocker-Warehouse/ rev-parse --short HEAD \
+      | xargs -I {} echo FPSLocker-Warehouse {} >> ../description.txt
+    cp -af FPSLocker-Warehouse/SaltySD/ ./
+    cp -af FPSLocker-Warehouse/atmosphere/ ./
     rm -rf FPSLocker-Warehouse
 fi
 
@@ -884,8 +876,8 @@ fi
 #    rm emuiibo.zip
 #fi
 
-## Fetch lastest emuiibo from https://github.com/zdm65477730/emuiibo/releases/latest
-curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/zdm65477730/emuiibo/releases/latest
+## Fetch lastest emuiibo from https://github.com/gzk47/emuiibo/releases/latest
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/gzk47/emuiibo/releases/latest
 cat $API_FILE \
   | jq '.tag_name' \
   | xargs -I {} echo emuiibo {} >> ../description.txt
@@ -1212,6 +1204,7 @@ cat > ./atmosphere/hosts/emummc.txt << ENDOFFILE
 127.0.0.1 *nintendo.co.za
 127.0.0.1 *nintendo.se
 127.0.0.1 *nintendo.ch
+127.0.0.1 *nintendo.pl
 127.0.0.1 *nintendoswitch.com
 127.0.0.1 *nintendoswitch.com.cn
 127.0.0.1 *nintendoswitch.cn
@@ -1418,6 +1411,8 @@ ENDOFFILE
 ###
 
 # -------------------------------------------
+
+cp -a ../description.txt ./
 
 echo ""
 echo "\033[32mYour Switch SD card is prepared!\033[0m"
