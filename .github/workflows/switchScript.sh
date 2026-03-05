@@ -261,22 +261,6 @@ else
     mv DBI.nro ./switch/DBI
 fi
 
-### Fetch lastest Awoo Installer from https://github.com/Huntereb/Awoo-Installer/releases/latest
-curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/Huntereb/Awoo-Installer/releases/latest
-cat $API_FILE \
-  | jq '.name' \
-  | xargs -I {} echo {} >> ../description.txt
-cat $API_FILE \
-  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*Awoo-Installer.zip' \
-  | xargs -I {} curl -fsSL {} -o Awoo-Installer.zip
-if [ $? -ne 0 ]; then
-    echo "Awoo Installer download\033[31m failed\033[0m."
-else
-    echo "Awoo Installer download\033[32m success\033[0m."
-    unzip -oq Awoo-Installer.zip
-    rm Awoo-Installer.zip
-fi
-
 ### Fetch lastest HekateToolbox from https://github.com/gzk47/Hekate-Toolbox/releases/latest
 curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/gzk47/Hekate-Toolbox/releases/latest
 cat $API_FILE \
@@ -355,55 +339,6 @@ else
     echo "tencent-switcher-gui download\033[32m success\033[0m."
     mkdir -p ./switch/tencent-switcher-gui
     mv tencent-switcher-gui.nro ./switch/tencent-switcher-gui
-fi
-
-### Fetch lastest aio-switch-updater from https://github.com/HamletDuFromage/aio-switch-updater/releases/latest
-curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/HamletDuFromage/aio-switch-updater/releases/latest
-cat $API_FILE \
-  | jq '.tag_name' \
-  | xargs -I {} echo aio-switch-updater {} >> ../description.txt
-cat $API_FILE \
-  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*aio-switch-updater.zip' \
-  | xargs -I {} curl -fsSL {} -o aio-switch-updater.zip
-if [ $? -ne 0 ]; then
-    echo "aio-switch-updater download\033[31m failed\033[0m."
-else
-    echo "aio-switch-updater download\033[32m success\033[0m."
-    unzip -oq aio-switch-updater.zip
-    rm aio-switch-updater.zip
-fi
-
-### Fetch lastest SimpleModDownloader from https://github.com/PoloNX/SimpleModDownloader/releases/latest
-curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/PoloNX/SimpleModDownloader/releases/latest
-cat $API_FILE \
-  | jq '.tag_name' \
-  | xargs -I {} echo SimpleModDownloader {} >> ../description.txt
-cat $API_FILE \
-  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*SimpleModDownloader.nro' \
-  | xargs -I {} curl -fsSL {} -o SimpleModDownloader.nro
-if [ $? -ne 0 ]; then
-    echo "SimpleModDownloader download\033[31m failed\033[0m."
-else
-    echo "SimpleModDownloader download\033[32m success\033[0m."
-    mkdir -p ./switch/SimpleModDownloader
-    mv SimpleModDownloader.nro ./switch/SimpleModDownloader
-fi
-
-### Fetch lastest SimpleModManager from https://github.com/DefenderOfHyrule/SimpleModManager/releases/latest
-curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/DefenderOfHyrule/SimpleModManager/releases/latest
-cat $API_FILE \
-  | jq '.tag_name' \
-  | xargs -I {} echo SimpleModManager {} >> ../description.txt
-cat $API_FILE \
-  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*SimpleModManager.nro' \
-  | xargs -I {} curl -fsSL {} -o SimpleModManager.nro
-if [ $? -ne 0 ]; then
-    echo "SimpleModManager download\033[31m failed\033[0m."
-else
-    echo "SimpleModManager download\033[32m success\033[0m."
-    mkdir -p ./switch/SimpleModManager
-    mkdir -p ./mods
-    mv SimpleModManager.nro ./switch/SimpleModManager
 fi
 
 ### Fetch NX-Shell from https://github.com/zdm65477730/NX-Shell/releases/latest
@@ -512,22 +447,6 @@ else
     echo "linkalho download\033[32m success\033[0m."
     mkdir -p ./switch/linkalho
     mv linkalho.nro ./switch/linkalho
-fi
-
-### Fetch lastest Checkpoint from https://github.com/BernardoGiordano/Checkpoint/releases/latest
-curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/BernardoGiordano/Checkpoint/releases/latest
-cat $API_FILE \
-  | jq '.tag_name' \
-  | xargs -I {} echo Checkpoint {} >> ../description.txt
-cat $API_FILE \
-  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*Checkpoint.nro' \
-  | xargs -I {} curl -fsSL {} -o Checkpoint.nro
-if [ $? -ne 0 ]; then
-    echo "Checkpoint download\033[31m failed\033[0m."
-else
-    echo "Checkpoint download\033[32m success\033[0m."
-    mkdir -p ./switch/Checkpoint
-    mv Checkpoint.nro ./switch/Checkpoint
 fi
 
 # -------------------------------------------
@@ -781,47 +700,6 @@ else
     echo "EdiZon download\033[32m success\033[0m."
     unzip -oq EdiZon.zip
     rm EdiZon.zip
-fi
-
-### Fetch ReverseNX-RT
-#curl -sL https://raw.githubusercontent.com/gzk47/SwitchPlugins/main/plugins/ReverseNX-RT.zip -o ReverseNX-RT.zip
-#if [ $? -ne 0 ]; then
-#    echo "ReverseNX-RT download\033[31m failed\033[0m."
-#else
-#    echo "ReverseNX-RT download\033[32m success\033[0m."
-#    unzip -oq ReverseNX-RT.zip
-#    rm ReverseNX-RT.zip
-#    rm -rf SaltySD/patches
-#fi
-
-## Fetch lastest ReverseNX-RT from https://github.com/zdm65477730/ReverseNX-RT/releases/latest
-curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/zdm65477730/ReverseNX-RT/releases/latest
-cat $API_FILE \
-  | jq '.tag_name' \
-  | xargs -I {} echo ReverseNX-RT {} >> ../description.txt
-cat $API_FILE \
-  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*ReverseNX-RT[^"]*.zip' \
-  | xargs -I {} curl -fsSL {} -o ReverseNX-RT.zip
-if [ $? -ne 0 ]; then
-    echo "ReverseNX-RT download\033[31m failed\033[0m."
-else
-    echo "ReverseNX-RT download\033[32m success\033[0m."
-    unzip -oq ReverseNX-RT.zip
-    rm ReverseNX-RT.zip
-    rm -rf SaltySD/patches
-fi
-
-### Fetch lastest FPSLocker-Warehouse from https://github.com/masagrator/FPSLocker-Warehouse
-git clone https://github.com/masagrator/FPSLocker-Warehouse
-if [ $? -ne 0 ]; then
-    echo "FPSLocker-Warehouse download\033[31m failed\033[0m."
-else
-    echo "FPSLocker-Warehouse download\033[32m success\033[0m."
-    git -C FPSLocker-Warehouse/ rev-parse --short HEAD \
-      | xargs -I {} echo FPSLocker-Warehouse {} >> ../description.txt
-    cp -af FPSLocker-Warehouse/SaltySD/ ./
-    cp -af FPSLocker-Warehouse/atmosphere/ ./
-    rm -rf FPSLocker-Warehouse
 fi
 
 ### Fetch sys-clk
