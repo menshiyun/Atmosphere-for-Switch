@@ -94,8 +94,8 @@ fi
 #    rm sigpatches.zip
 #fi
 
-### Fetch sys-patch from https://github.com/menshiyun/sys-patch/releases/latest
-curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/menshiyun/sys-patch/releases/latest
+### Fetch sys-patch from https://github.com/borntohonk/sys-patch/releases/latest
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/borntohonk/sys-patch/releases/latest
 cat $API_FILE \
   | jq '.name' \
   | xargs -I {} echo {} >> ../description.txt
