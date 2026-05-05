@@ -233,21 +233,30 @@ else
     mv Switch_90DNS_tester.nro ./switch/Switch_90DNS_tester
 fi
 
-### Fetch lastest DBI from https://github.com/menshiyun/dbi/releases/latest
-curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/menshiyun/dbi/releases/latest
+### Fetch lastest DBI from https://github.com/rashevskyv/DBIPatcher/releases/latest
+curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/rashevskyv/DBIPatcher/releases/latest
 cat $API_FILE \
   | jq '.name' \
   | xargs -I {} echo {} >> ../description.txt
 cat $API_FILE \
-  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*DBI\.chs\.nro' \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*DBI\.nro' \
   | xargs -I {} curl -fsSL {} -o DBI.nro
 if [ $? -ne 0 ]; then
     echo "DBI download\033[31m failed\033[0m."
 else
     echo "DBI download\033[32m success\033[0m."
-    mkdir -p ./switch/DBI
-    mv DBI.nro ./switch/DBI
 fi
+cat $API_FILE \
+  | grep -oP '"browser_download_url":\s*"\Khttps?://[^"]*translation_zhcn\.bin' \
+  | xargs -I {} curl -fsSL {} -o translation.bin
+if [ $? -ne 0 ]; then
+    echo "DBI translation download\033[31m failed\033[0m."
+else
+    echo "DBI translation download\033[32m success\033[0m."
+fi
+mkdir -p ./switch/DBI
+mv DBI.nro ./switch/DBI/
+mv translation.bin ./switch/DBI/
 
 ### Fetch lastest HekateToolbox from https://github.com/gzk47/Hekate-Toolbox/releases/latest
 curl -o $API_FILE -H "$API_AUTH" -fsSL https://api.github.com/repos/gzk47/Hekate-Toolbox/releases/latest
